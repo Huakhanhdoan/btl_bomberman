@@ -13,8 +13,12 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
-
+    public int count =0;
+    public int khunghinh = 1;
+    public String back = "";
     protected Image img;
+
+
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
@@ -27,4 +31,20 @@ public abstract class Entity {
         gc.drawImage(img, x, y);
     }
     public abstract void update();
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x*Sprite.SCALED_SIZE;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y*Sprite.SCALED_SIZE;
+    }
 }
