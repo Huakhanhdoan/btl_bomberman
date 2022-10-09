@@ -19,6 +19,7 @@ import static uet.oop.bomberman.BombermanGame.canmove;
 public class Bomber extends Entity {
     //  private KeyCode direction;
     private KeyCode keycode;
+    private Sprite sprite;
     private boolean keyleft = false;
     private boolean keyright = false;
     private boolean keyup = false;
@@ -27,6 +28,7 @@ public class Bomber extends Entity {
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
+        sprite = Sprite.player_right;
     }
 
     public void setKeycode(KeyCode keycode) {
@@ -34,27 +36,28 @@ public class Bomber extends Entity {
     }
 
     public void moving() {
-        check_collision();
 
-        if (keyup) {
+     //   check_collision();
 
-            y -= 2;
+        if (keyup&&canMove(x,y-speed)) {
 
-        }
-        if (keydown) {
-
-            y += 2;
+            y -= speed;
 
         }
-        if (keyleft) {
+        if (keydown&&canMove(x,y+speed)) {
 
-
-            x -= 2;
+            y += speed;
 
         }
-        if (keyright) {
+        if (keyleft&&canMove(x-speed,y)) {
 
-            x += 2;
+
+            x -= speed;
+
+        }
+        if (keyright&&canMove(x+speed,y)) {
+
+            x += speed;
 
         }
 
@@ -62,14 +65,34 @@ public class Bomber extends Entity {
 
     public void keypress() {
 
-        if (keycode == W)
+        if (keycode == W) {
             keyup = true;
+            keyright = false;
+            keyleft = false;
+            keydown = false;
+        }
+
         if (keycode == S)
+        {
+            keyup = false;
+            keyright = false;
+            keyleft = false;
             keydown = true;
-        if (keycode == A)
+        }
+
+        if (keycode == A) {
+            keyup = false;
+            keyright = false;
             keyleft = true;
-        if (keycode == D)
+            keydown = false;
+        }
+
+        if (keycode == D) {
             keyright = true;
+            keyup = false;
+            keyleft = false;
+            keydown = false;
+        }
 
     }
     public void creatBomb() {
@@ -94,13 +117,14 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
+        setSpeed(1);
         moving();
         creatBomb();
         if (keyright) {
             back = "d";
-            if (khunghinh == 1) img = Sprite.player_right.getFxImage();
-            else if (khunghinh == 2) img = Sprite.player_right_1.getFxImage();
-            else if (khunghinh == 3) img = Sprite.player_right_2.getFxImage();
+           if (khunghinh == 1) img = Sprite.player_right.getFxImage();
+           else if (khunghinh == 2) img = Sprite.player_right_1.getFxImage();
+           else if (khunghinh == 3) img = Sprite.player_right_2.getFxImage();
 
         }
         if (keyup) {
@@ -137,22 +161,6 @@ public class Bomber extends Entity {
 
     }
 
-    public void check_collision() {
-        // tao cac toa do la trung diem 4 canh hinh vuong nhan vat
-        int check_upX = (x+16) / 32;
-        int check_upY = (y+4) / 32;
-        int check_downX = (x+16) / 32;
-        int check_downY = (y + 32-4) / 32;
-        int check_leftX = (x ) / 32;
-        int check_leftY = (y+16) / 32;
-        int check_rightX = (x + 32-8) / 32;
-        int check_rightY = (y + 16) / 32;
-        if (canmove[check_upX][check_upY]) y+=2;
-        if (canmove[check_downX][check_downY]) y-=2;
 
-        if (canmove[check_leftX][check_leftY]) x+=2;
-        if (canmove[check_rightX][check_rightY]) x-=2;
-
-    }
 }
 
