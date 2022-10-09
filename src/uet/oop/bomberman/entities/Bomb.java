@@ -16,6 +16,11 @@ public class Bomb extends Entity {
     }
     @Override
     public void update() {
+animation();
+
+
+    }
+    public void animation() {
         timeloop++;
         if(timeloop %20 == 0 ) {
             img = Sprite.bomb_1.getFxImage();
@@ -33,8 +38,6 @@ public class Bomb extends Entity {
             BombermanGame.entities.remove(this);
             timeloop = 0;
         }
-
-
     }
 
 }

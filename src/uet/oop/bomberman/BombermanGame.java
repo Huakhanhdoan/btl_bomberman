@@ -22,9 +22,9 @@ import java.util.Scanner;
 
 public class BombermanGame extends Application {
 
-    public static final int WIDTH= 25;
+    public static final int WIDTH = 25;
     public static final int HEIGHT = 15;
-    public static boolean[][] canmove= new boolean[50][50];
+    public static boolean[][] canmove = new boolean[50][50];
     private GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();
@@ -67,30 +67,32 @@ public class BombermanGame extends Application {
         createMap();
 
         Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-              Entity enemy = new Enemy(10, 1, Sprite.balloom_left1.getFxImage());
+        Entity enemy = new Enemy(10, 1, Sprite.balloom_left1.getFxImage());
         Entity enemy2 = new Enemy(21, 13, Sprite.balloom_left1.getFxImage());
+        Entity enemy3 = new Enemy(3, 11, Sprite.balloom_left1.getFxImage());
         entities.add(bomberman);
-          entities.add(enemy);
-          entities.add(enemy2);
+        entities.add(enemy);
+        entities.add(enemy2);
+        entities.add(enemy3);
 
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             @Override
             public void handle(KeyEvent keyEvent) {
-                if(keyEvent.getCode()== KeyCode.SPACE) {
+                if (keyEvent.getCode() == KeyCode.SPACE) {
 
                     boolean check_bomb = false;
-                    for (Entity entity:entities) {
-                        if(entity instanceof Bomb) {
+                    for (Entity entity : entities) {
+                        if (entity instanceof Bomb) {
                             check_bomb = true;
                         }
                     }
-                   if(!check_bomb) {
-                       Bomb bomb= new Bomb((bomberman.getX()+16)/Sprite.SCALED_SIZE,
-                               (bomberman.getY()+16)/Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
-                       entities.add(bomb);
-                   }
+                    if (!check_bomb) {
+                        Bomb bomb = new Bomb((bomberman.getX() + 16) / Sprite.SCALED_SIZE,
+                                (bomberman.getY() + 16) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
+                        entities.add(bomb);
+                    }
                 }
                 bomberman.setKeycode(keyEvent.getCode());
                 bomberman.keypress();
@@ -110,8 +112,8 @@ public class BombermanGame extends Application {
 
         File myObj = new File("src\\uet\\oop\\bomberman\\map.txt");
         Scanner myReader = new Scanner(myObj);
-        for (int i = 0;i<15;i++){
-            for (int j = 0;j<25;j++) {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 25; j++) {
                 Entity object;
                 int data = myReader.nextInt();
                 if (data == 0) {
@@ -119,14 +121,14 @@ public class BombermanGame extends Application {
                     stillObjects.add(object);
                 }
                 if (data == 1) {
-                    object = new Wall(j,i, Sprite.wall.getFxImage());
+                    object = new Wall(j, i, Sprite.wall.getFxImage());
                     stillObjects.add(object);
-                    canmove[j][i]=true;
+                    canmove[j][i] = true;
                 }
                 if (data == 2) {
-                    object = new Brick(j,i, Sprite.brick.getFxImage());
+                    object = new Brick(j, i, Sprite.brick.getFxImage());
                     stillObjects.add(object);
-                    canmove[j][i]=true;
+                    canmove[j][i] = true;
                 }
 
             }
@@ -138,9 +140,9 @@ public class BombermanGame extends Application {
 
     public void update() {
         int size = entities.size();
-for(int i = 0;i<size;i++) {
-    entities.get(i).update();
-}
+        for (int i = 0; i < size; i++) {
+            entities.get(i).update();
+        }
 
     }
 

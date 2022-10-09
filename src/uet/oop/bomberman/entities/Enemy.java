@@ -29,12 +29,12 @@ private void randomd() {
             if (direction == 4 && canMove_enemy(x,y-1)) break ;
             randomd();
         }
-       if(timeloop==20 ) {
+       if(timeloop==30 ) {
 
 
            randomd();
        };
-        if (timeloop==60)
+        if (timeloop==100)
             timeloop =0;
         moving_enemy();
 
