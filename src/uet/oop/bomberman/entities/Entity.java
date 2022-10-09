@@ -92,19 +92,5 @@ public abstract class Entity {
         else
             return true;
     }
-    public void check_collision_enemy() {
-        // tao cac toa do la trung diem 4 canh hinh vuong nhan vat
-        int check_up_leftX = (x + 4) / 32;
-        int check_up_leftY = (y + 4) / 32;
-        int check_down_rightX = (x + 32 - 8) / 32;
-        int check_down_rightY = (y + 32 - 8) / 32;
-        int check_left_downX = (x + 4) / 32;
-        int check_left_downY = (y + 32 - 4) / 32;
-        int check_right_upX = (x + 32 - 4) / 32;
-        int check_right_upY = (y + 4) / 32;
-        if (canmove[check_up_leftX][check_up_leftY] || canmove[check_right_upX][check_right_upY]) y += speed;
-        if (canmove[check_down_rightX][check_down_rightY] || canmove[check_left_downX][check_left_downY]) y -= speed;
-        if (canmove[check_up_leftX][check_up_leftY] || canmove[check_left_downX][check_left_downY]) x += speed;
-        if (canmove[check_down_rightX][check_down_rightY] || canmove[check_right_upX][check_right_upY]) x -= speed;
-    }
+
 }

@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
@@ -77,6 +78,20 @@ public class BombermanGame extends Application {
 
             @Override
             public void handle(KeyEvent keyEvent) {
+                if(keyEvent.getCode()== KeyCode.SPACE) {
+
+                    boolean check_bomb = false;
+                    for (Entity entity:entities) {
+                        if(entity instanceof Bomb) {
+                            check_bomb = true;
+                        }
+                    }
+                   if(!check_bomb) {
+                       Bomb bomb= new Bomb((bomberman.getX()+16)/Sprite.SCALED_SIZE,
+                               (bomberman.getY()+16)/Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
+                       entities.add(bomb);
+                   }
+                }
                 bomberman.setKeycode(keyEvent.getCode());
                 bomberman.keypress();
             }
@@ -122,8 +137,10 @@ public class BombermanGame extends Application {
 
 
     public void update() {
-
-        entities.forEach(Entity::update);
+        int size = entities.size();
+for(int i = 0;i<size;i++) {
+    entities.get(i).update();
+}
 
     }
 
