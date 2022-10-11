@@ -7,8 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-import static uet.oop.bomberman.BombermanGame.canmove;
-import static uet.oop.bomberman.BombermanGame.stillObjects;
+import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomb extends Entity {
     private int timeloop;
@@ -54,36 +53,56 @@ public class Bomb extends Entity {
 
     // no bomb + pha bick
     public void destroy() {
-        int bombX = x / Sprite.SCALED_SIZE;
-        int bombY = y / Sprite.SCALED_SIZE;
+        int bombX = (x) / Sprite.SCALED_SIZE;
+        int bombY = (y) / Sprite.SCALED_SIZE;
+        check_entiny(bombX,bombY);
         if (!canmove[bombX + 1][bombY]) {
+            check_entiny(bombX+1,bombY);
             animation_explosion(bombX + 1, bombY, true);
         } else {
             check_brick(bombX + 1, bombY);
+
         }
         if (!canmove[bombX - 1][bombY]) {
+            check_entiny(bombX-1,bombY);
             animation_explosion(bombX - 1, bombY, true);
         } else {
             check_brick(bombX - 1, bombY);
+
         }
         if (!canmove[bombX][bombY - 1]) {
+            check_entiny(bombX,bombY-1);
             animation_explosion(bombX, bombY - 1, false);
         } else {
             check_brick(bombX, bombY - 1);
+
         }
         if (!canmove[bombX][bombY + 1]) {
+            check_entiny(bombX,bombY+1);
             animation_explosion(bombX, bombY + 1, false);
         } else {
             check_brick(bombX, bombY + 1);
+
         }
     }
 
     // check xem co bick trong pham vi no khong
     public void check_brick(int bombX, int bombY) {
-        if (stillObjects.get(25 * (bombY) + bombX) instanceof Brick) {
-            stillObjects.remove(25 * (bombY) + bombX);
-            stillObjects.add(25 * (bombY) + bombX, new Grass(bombX, bombY, Sprite.grass.getFxImage()));
-            canmove[bombX][bombY] = false;
+        if (stillObjects.get(25 * (bombY) + bombX) instanceof Brick)  {
+                stillObjects.remove(25 * (bombY) + bombX);
+                stillObjects.add(25 * (bombY) + bombX, new Grass(bombX, bombY, Sprite.grass.getFxImage()));
+                canmove[bombX][bombY] = false;
+
+        }
+    }
+    // check bomber and enemy
+    public void check_entiny(int bombX, int bombY) {
+        int size = entities.size();
+        for (int i = 0; i < size; i++) {
+            if(((entities.get(i).x/32)==bombX&&(entities.get(i).y/32)==bombY)
+                    ||((entities.get(i).x+Sprite.SCALED_SIZE-1)/32)==bombX&&((entities.get(i).y+Sprite.SCALED_SIZE-1)/32)==bombY) {
+                entities.get(i).setLives(false);
+            }
         }
     }
 

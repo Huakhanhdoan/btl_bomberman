@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -40,7 +41,8 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) throws FileNotFoundException {
         // Tao Canvas
-        final int[] count = {0};
+
+        final int[] time = {0};
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
@@ -62,6 +64,14 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 render();
                 update();
+                if(!(entities.get(0) instanceof Bomber)) {
+                    time[0]++;
+                    Image image = new Image("/textures/gameover.jpg");
+                    gc.drawImage(image, 0,0,25*32,15*32);
+                    if(time[0]==70)
+                    stage.close();
+                }
+
             }
         };
         timer.start();
@@ -76,6 +86,7 @@ public class BombermanGame extends Application {
         entities.add(enemy);
         entities.add(enemy2);
         entities.add(enemy3);
+
 
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -109,6 +120,7 @@ public class BombermanGame extends Application {
                 bomberman.keyReleased(keyEvent.getCode());
             }
         });
+
     }
 
     public void createMap() throws FileNotFoundException {
@@ -143,18 +155,18 @@ public class BombermanGame extends Application {
 
 
     public void update() {
-        int size = entities.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update();
         }
-
-
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+      //  entities.forEach(g -> g.render(gc));
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).render(gc);
+        }
 
     }
 

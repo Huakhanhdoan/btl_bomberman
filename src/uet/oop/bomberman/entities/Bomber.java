@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static javafx.scene.input.KeyCode.*;
@@ -17,12 +18,14 @@ public class Bomber extends Entity {
     private boolean keydown = false;
     public int count = 0;
     public int khunghinh = 1;
+
     public String back = "";
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
         sprite = Sprite.player_right;
     }
+
 
     public void setKeycode(KeyCode keycode) {
         this.keycode = keycode;
@@ -103,46 +106,65 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
-        setSpeed(1);
-        moving();
-        if (keyright) {
-            back = "d";
-           if (khunghinh == 1) img = Sprite.player_right.getFxImage();
-           else if (khunghinh == 2) img = Sprite.player_right_1.getFxImage();
-           else if (khunghinh == 3) img = Sprite.player_right_2.getFxImage();
+
+        if(lives) {
+            setSpeed(1);
+            moving();
+            if (keyright) {
+
+                back = "d";
+                if (khunghinh == 1) img = Sprite.player_right.getFxImage();
+                else if (khunghinh == 2) img = Sprite.player_right_1.getFxImage();
+                else if (khunghinh == 3) img = Sprite.player_right_2.getFxImage();
+
+            }
+            if (keyup) {
+                back = "w";
+                if (khunghinh == 1) img = Sprite.player_up.getFxImage();
+                else if (khunghinh == 2) img = Sprite.player_up_1.getFxImage();
+                else if (khunghinh == 3) img = Sprite.player_up_2.getFxImage();
+
+            }
+            if (keydown) {
+                back = "s";
+                if (khunghinh == 1) img = Sprite.player_down.getFxImage();
+                else if (khunghinh == 2) img = Sprite.player_down_1.getFxImage();
+                else if (khunghinh == 3) img = Sprite.player_down_2.getFxImage();
+
+            }
+            if (keyleft) {
+                back = "a";
+                if (khunghinh == 1) img = Sprite.player_left.getFxImage();
+                else if (khunghinh == 2) img = Sprite.player_left_1.getFxImage();
+                else if (khunghinh == 3) img = Sprite.player_left_2.getFxImage();
+            }
+            count++;
+            if (count > 8) {
+                if (khunghinh == 1) khunghinh = 2;
+                else if (khunghinh == 2) khunghinh = 3;
+                else if (khunghinh == 3) khunghinh = 1;
+                count = 0;
+            }
+            if (!keyright && back.equals("d")) img = Sprite.player_right.getFxImage();
+            if (!keyleft && back.equals("a")) img = Sprite.player_left.getFxImage();
+            if (!keyup && back.equals("w")) img = Sprite.player_up.getFxImage();
+            if (!keydown && back.equals("s")) img = Sprite.player_down.getFxImage();
+        }
+        else  {
+            timeDie++;
+            if(timeDie ==1) {
+                img = Sprite.player_dead1.getFxImage();
+            }
+            if(timeDie==10) {
+                img = Sprite.player_dead2.getFxImage();
+            }
+                if(timeDie==50) {
+                    BombermanGame.entities.remove(this);
+                    timeDie = 0;
+
+                }
 
         }
-        if (keyup) {
-            back = "w";
-            if (khunghinh == 1) img = Sprite.player_up.getFxImage();
-            else if (khunghinh == 2) img = Sprite.player_up_1.getFxImage();
-            else if (khunghinh == 3) img = Sprite.player_up_2.getFxImage();
-
-        }
-        if (keydown) {
-            back = "s";
-            if (khunghinh == 1) img = Sprite.player_down.getFxImage();
-            else if (khunghinh == 2) img = Sprite.player_down_1.getFxImage();
-            else if (khunghinh == 3) img = Sprite.player_down_2.getFxImage();
-
-        }
-        if (keyleft) {
-            back = "a";
-            if (khunghinh == 1) img = Sprite.player_left.getFxImage();
-            else if (khunghinh == 2) img = Sprite.player_left_1.getFxImage();
-            else if (khunghinh == 3) img = Sprite.player_left_2.getFxImage();
-        }
-        count++;
-        if (count > 8) {
-            if (khunghinh == 1) khunghinh = 2;
-            else if (khunghinh == 2) khunghinh = 3;
-            else if (khunghinh == 3) khunghinh = 1;
-            count = 0;
-        }
-        if (!keyright && back.equals("d")) img = Sprite.player_right.getFxImage();
-        if (!keyleft && back.equals("a")) img = Sprite.player_left.getFxImage();
-        if (!keyup && back.equals("w")) img = Sprite.player_up.getFxImage();
-        if (!keydown && back.equals("s")) img = Sprite.player_down.getFxImage();
 
     }
 

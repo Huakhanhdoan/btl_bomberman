@@ -15,7 +15,15 @@ public abstract class Entity {
     protected int y;
     //toc do di chuyen cua thuc the
     protected int speed;
+    protected boolean lives = true;
+protected int timeDie=0;
+    public boolean isLives() {
+        return lives;
+    }
 
+    public void setLives(boolean lives) {
+        this.lives = lives;
+    }
 
     public void setSpeed(int speed) {
         this.speed = speed;
