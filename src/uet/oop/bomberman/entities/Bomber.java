@@ -1,20 +1,11 @@
 package uet.oop.bomberman.entities;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.List;
-
 import static javafx.scene.input.KeyCode.*;
-import static uet.oop.bomberman.BombermanGame.canmove;
+
 
 public class Bomber extends Entity {
     //  private KeyCode direction;
@@ -24,7 +15,9 @@ public class Bomber extends Entity {
     private boolean keyright = false;
     private boolean keyup = false;
     private boolean keydown = false;
-
+    public int count = 0;
+    public int khunghinh = 1;
+    public String back = "";
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -37,7 +30,6 @@ public class Bomber extends Entity {
 
     public void moving() {
 
-     //   check_collision();
 
         if (keyup&&canMove(x,y-speed)) {
 
@@ -95,13 +87,7 @@ public class Bomber extends Entity {
         }
 
     }
-    public void creatBomb() {
-        Entity object;
-        if(keycode == SPACE) {
-            object = new Bomber(x / 32 * 32, y / 32 * 32, Sprite.bomb.getFxImage());
 
-        }
-    }
 
     public void keyReleased(KeyCode keycode) {
         if (keycode == W)
@@ -119,7 +105,6 @@ public class Bomber extends Entity {
     public void update() {
         setSpeed(1);
         moving();
-        creatBomb();
         if (keyright) {
             back = "d";
            if (khunghinh == 1) img = Sprite.player_right.getFxImage();

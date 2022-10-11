@@ -1,10 +1,8 @@
 package uet.oop.bomberman.entities;
 
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
+
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.canmove;
@@ -25,9 +23,7 @@ public abstract class Entity {
 
 
 
-    public int count = 0;
-    public int khunghinh = 1;
-    public String back = "";
+
     protected Image img;
 
 
@@ -43,6 +39,10 @@ public abstract class Entity {
     }
 
     public abstract void update();
+
+    public Image getImg() {
+        return img;
+    }
 
     public int getX() {
         return x;

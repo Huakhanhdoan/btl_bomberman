@@ -7,14 +7,15 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
+
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,11 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 25;
     public static final int HEIGHT = 15;
     public static boolean[][] canmove = new boolean[50][50];
-    private GraphicsContext gc;
+   public static GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
-    public static List<Entity> list_wall = new ArrayList<>();
+
 
 
     public static void main(String[] args) {
@@ -64,6 +65,7 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
+
         createMap();
 
         Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -92,6 +94,8 @@ public class BombermanGame extends Application {
                         Bomb bomb = new Bomb((bomberman.getX() + 16) / Sprite.SCALED_SIZE,
                                 (bomberman.getY() + 16) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
                         entities.add(bomb);
+
+
                     }
                 }
                 bomberman.setKeycode(keyEvent.getCode());
@@ -144,12 +148,14 @@ public class BombermanGame extends Application {
             entities.get(i).update();
         }
 
+
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+
     }
 
 }
