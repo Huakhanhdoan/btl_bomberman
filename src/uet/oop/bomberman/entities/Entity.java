@@ -14,7 +14,7 @@ public abstract class Entity {
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
     //toc do di chuyen cua thuc the
-    protected int speed;
+    protected int speed =1;
     protected boolean lives = true;
 protected int timeDie=0;
     public boolean isLives() {
@@ -69,14 +69,14 @@ protected int timeDie=0;
     }
 
     public boolean canMove(int x, int y) {
-        int check_up_leftX = (x+4 ) / 32;
-        int check_up_leftY = (y +4) / 32;
-        int check_down_rightX = (x + 32 - 12) / 32;
-        int check_down_rightY = (y + 32 - 4) / 32;
-        int check_left_downX = (x +4) / 32;
-        int check_left_downY = (y + 32 -4) / 32;
-        int check_right_upX = (x + 32 - 12) / 32;
-        int check_right_upY = (y + 4) / 32;
+        int check_up_leftX = (x+4 ) / Sprite.SCALED_SIZE;
+        int check_up_leftY = (y +4) / Sprite.SCALED_SIZE;
+        int check_down_rightX = (x + Sprite.SCALED_SIZE - 12) / Sprite.SCALED_SIZE;
+        int check_down_rightY = (y + Sprite.SCALED_SIZE - 4) / Sprite.SCALED_SIZE;
+        int check_left_downX = (x +4) / Sprite.SCALED_SIZE;
+        int check_left_downY = (y + Sprite.SCALED_SIZE -4) / Sprite.SCALED_SIZE;
+        int check_right_upX = (x + Sprite.SCALED_SIZE - 12) / Sprite.SCALED_SIZE;
+        int check_right_upY = (y + 4) / Sprite.SCALED_SIZE;
         if (canmove[check_up_leftX][check_up_leftY]) return false;
         if (canmove[check_down_rightX][check_down_rightY]) return false;
         if ( canmove[check_left_downX][check_left_downY]) return false;
@@ -85,14 +85,14 @@ protected int timeDie=0;
             return true;
     }
     public boolean canMove_enemy(int x, int y) {
-        int check_up_leftX = (x +1) / 32;
-        int check_up_leftY = (y +1) / 32;
-        int check_down_rightX = (x + 32 -1) / 32;
-        int check_down_rightY = (y + 32 -1) / 32;
-        int check_left_downX = (x +1) / 32;
-        int check_left_downY = (y + 32 -1) / 32;
-        int check_right_upX = (x + 32 -1) / 32;
-        int check_right_upY = (y  +1) / 32;
+        int check_up_leftX = (x +1) / Sprite.SCALED_SIZE;
+        int check_up_leftY = (y +1) / Sprite.SCALED_SIZE;
+        int check_down_rightX = (x + Sprite.SCALED_SIZE -1) / Sprite.SCALED_SIZE;
+        int check_down_rightY = (y + Sprite.SCALED_SIZE -1) / Sprite.SCALED_SIZE;
+        int check_left_downX = (x +1) / Sprite.SCALED_SIZE;
+        int check_left_downY = (y + Sprite.SCALED_SIZE -1) / Sprite.SCALED_SIZE;
+        int check_right_upX = (x + Sprite.SCALED_SIZE -1) / Sprite.SCALED_SIZE;
+        int check_right_upY = (y  +1) / Sprite.SCALED_SIZE;
         if (canmove[check_up_leftX][check_up_leftY]) return false;
         if (canmove[check_down_rightX][check_down_rightY]) return false;
         if ( canmove[check_left_downX][check_left_downY]) return false;

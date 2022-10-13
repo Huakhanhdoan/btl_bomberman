@@ -67,9 +67,10 @@ public class BombermanGame extends Application {
                 if(!(entities.get(0) instanceof Bomber)) {
                     time[0]++;
                     Image image = new Image("/textures/gameover.jpg");
-                    gc.drawImage(image, 0,0,25*32,15*32);
+                    gc.drawImage(image, 0,0,25*Sprite.SCALED_SIZE,15*Sprite.SCALED_SIZE);
                     if(time[0]==70)
-                    stage.close();
+                        stage.close();
+
                 }
 
             }
@@ -82,7 +83,9 @@ public class BombermanGame extends Application {
         Entity enemy = new Enemy(10, 1, Sprite.balloom_left1.getFxImage());
         Entity enemy2 = new Enemy(21, 13, Sprite.balloom_left1.getFxImage());
         Entity enemy3 = new Enemy(3, 11, Sprite.balloom_left1.getFxImage());
+        bomberman.setSpeed(2);
         entities.add(bomberman);
+
         entities.add(enemy);
         entities.add(enemy2);
         entities.add(enemy3);

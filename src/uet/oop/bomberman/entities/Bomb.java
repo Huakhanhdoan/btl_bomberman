@@ -23,6 +23,7 @@ public class Bomb extends Entity {
 
     // hoat anh bomb no
     public void animation() {
+
         timeloop++;
         if (timeloop % 20 == 0) {
             img = Sprite.bomb_1.getFxImage();
@@ -30,6 +31,9 @@ public class Bomb extends Entity {
         if (timeloop % 20 == 10) {
             img = Sprite.bomb_2.getFxImage();
         }
+//        if(timeloop == 70) {
+//            canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = true;
+//        }
         if (timeloop == 150) {
             img = Sprite.bomb_exploded.getFxImage();
         }
@@ -45,7 +49,7 @@ public class Bomb extends Entity {
 
         }
         if (timeloop == 170) {
-
+            canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = false;
             BombermanGame.entities.remove(this);
             timeloop = 0;
         }
@@ -99,7 +103,7 @@ public class Bomb extends Entity {
     public void check_entiny(int bombX, int bombY) {
         int size = entities.size();
         for (int i = 0; i < size; i++) {
-            if(((entities.get(i).x/32)==bombX&&(entities.get(i).y/32)==bombY)
+            if(((entities.get(i).x/Sprite.SCALED_SIZE)==bombX&&(entities.get(i).y/Sprite.SCALED_SIZE)==bombY)
                     ||((entities.get(i).x+Sprite.SCALED_SIZE-1)/32)==bombX&&((entities.get(i).y+Sprite.SCALED_SIZE-1)/32)==bombY) {
                 entities.get(i).setLives(false);
             }
