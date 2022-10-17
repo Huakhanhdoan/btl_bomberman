@@ -7,8 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-import static uet.oop.bomberman.BombermanGame.canmove;
-import static uet.oop.bomberman.BombermanGame.stillObjects;
+import static uet.oop.bomberman.BombermanGame.*;
 
 public class Enemy extends Entity {
     private int direction;
@@ -88,12 +87,13 @@ public class Enemy extends Entity {
                 }
             }
         } else {
+
             timeDie++;
             direction = 5;
             img = Sprite.balloom_dead.getFxImage();
         }
         if (timeDie == 30) {
-
+point+=100;
             timeDie = 0;
             BombermanGame.entities.remove(this);
 

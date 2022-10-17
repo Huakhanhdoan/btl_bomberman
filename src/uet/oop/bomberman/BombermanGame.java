@@ -10,18 +10,25 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
-
 import uet.oop.bomberman.entities.enemy.Enemy;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
-
+import uet.oop.bomberman.menu.Menu;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class BombermanGame extends Application {
 
@@ -30,6 +37,9 @@ public class BombermanGame extends Application {
     public static boolean[][] canmove = new boolean[50][50];
     public static GraphicsContext gc;
     private Canvas canvas;
+    public static int count = 0;
+    public static int point = 0;
+    public static int time = 7200;
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
 
@@ -39,20 +49,24 @@ public class BombermanGame extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws FileNotFoundException {
+    public void start(Stage stage) throws IOException {
         // Tao Canvas
 
-        final int[] time = {0};
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT+32);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
         Group root = new Group();
-
+        Text _point = new Text();
+        Text _time = new Text();
+setPoint(root,_time,_point);
         root.getChildren().add(canvas);
+
 
         // Tao scene
         Scene scene = new Scene(root);
+        stage.setTitle("Bomberman");
+        stage.getIcons().add(new Image("/sprites/icon.png"));
 
         // Them scene vao stage
         stage.setScene(scene);
@@ -62,23 +76,24 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                time--;
+                updateSetpoint(_point,_time );
                 render();
                 update();
-                if (!(entities.get(0) instanceof Bomber)) {
-                    time[0]++;
-                    Image image = new Image("/textures/gameover.jpg");
-                    gc.drawImage(image, 0, 0, 25 * Sprite.SCALED_SIZE, 15 * Sprite.SCALED_SIZE);
-                    if (time[0] == 70)
-                        stage.close();
+                if (check_endgame()) {
 
+                    reset_game();
                 }
 
             }
         };
-        timer.start();
+
+        Menu menu = new Menu(stage,root,timer);
+
+
 
         createMap();
-       Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
         bomberman.setSpeed(2);
         creatEntinys();
@@ -88,6 +103,7 @@ public class BombermanGame extends Application {
 
             @Override
             public void handle(KeyEvent keyEvent) {
+
                 if (keyEvent.getCode() == KeyCode.SPACE) {
 
                     boolean check_bomb = false;
@@ -97,26 +113,26 @@ public class BombermanGame extends Application {
                         }
                     }
                     if (!check_bomb) {
-                        Bomb bomb = new Bomb((bomberman.getX() + 16) / Sprite.SCALED_SIZE,
-                                (bomberman.getY() + 16) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
+                        Bomb bomb = new Bomb((entities.get(0).getX() + 16) / Sprite.SCALED_SIZE,
+                                (entities.get(0).getY() + 16) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
                         entities.add(bomb);
 
 
                     }
                 }
-                bomberman.setKeycode(keyEvent.getCode());
-                bomberman.keypress();
+                ((Bomber) entities.get(0)).setKeycode(keyEvent.getCode());
+                ((Bomber) entities.get(0)).keypress();
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
             @Override
             public void handle(KeyEvent keyEvent) {
-                bomberman.keyReleased(keyEvent.getCode());
+                ((Bomber) entities.get(0)).keyReleased(keyEvent.getCode());
             }
         });
-
     }
+
 
     public void createMap() throws FileNotFoundException {
 
@@ -153,8 +169,8 @@ public class BombermanGame extends Application {
         Entity enemy = new Enemy(10, 1, Sprite.balloom_left1.getFxImage());
         Entity enemy2 = new Enemy(21, 13, Sprite.balloom_left1.getFxImage());
         Entity enemy3 = new Enemy(3, 11, Sprite.balloom_left1.getFxImage());
-        Entity oneal1 = new Oneal(19,7,Sprite.oneal_left1.getFxImage());
-        Entity oneal2 = new Oneal(11,13,Sprite.oneal_left1.getFxImage());
+        Entity oneal1 = new Oneal(19, 7, Sprite.oneal_left1.getFxImage());
+        Entity oneal2 = new Oneal(11, 13, Sprite.oneal_left1.getFxImage());
 
 
         entities.add(enemy);
@@ -173,11 +189,54 @@ public class BombermanGame extends Application {
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        //  entities.forEach(g -> g.render(gc));
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).render(gc);
         }
 
     }
 
+    public boolean check_endgame() {
+        if (entities.get(0) instanceof Bomber|| time ==0) return false;
+        return true;
+    }
+
+    public void reset_game() {
+        count++;
+        Image image = new Image("/textures/gameover.jpg");
+        gc.drawImage(image, 0, 0, 25 * Sprite.SCALED_SIZE, 16 * Sprite.SCALED_SIZE);
+        if (count == 70) {
+
+            entities.clear();
+            stillObjects.clear();
+            Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+            entities.add(bomberman);
+            bomberman.setSpeed(2);
+            creatEntinys();
+            count = 0;
+            try {
+                createMap();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+    }
+    public void setPoint( Group root,Text timer,Text point) {
+        Rectangle rectangle = new Rectangle(0,15*32,25*32,32);
+        rectangle.setFill(Color.LIGHTGREEN);
+        timer.setX(200);
+        timer.setY(500);
+
+        point.setX(32);
+        point.setY(500);
+        point.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        timer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        root.getChildren().addAll(rectangle,point,timer);
+
+    }
+    public void updateSetpoint(Text _point, Text timer) {
+        _point.setText("Point :"+point);
+        timer.setText("Time :"+time/60);
+    }
 }

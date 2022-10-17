@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.enemy.Enemy;
+import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static javafx.scene.input.KeyCode.*;
@@ -109,7 +110,7 @@ public class Bomber extends Entity {
     public void check_colide_enemy() {
         int size = entities.size();
         for (int i = 1; i < size; i++) {
-            if (entities.get(i) instanceof Enemy) {
+            if (entities.get(i) instanceof Enemy||entities.get(i) instanceof Oneal) {
                 if (((entities.get(i).x / Sprite.SCALED_SIZE) == x / Sprite.SCALED_SIZE
                         && (entities.get(i).y / Sprite.SCALED_SIZE) == y / Sprite.SCALED_SIZE)
                         || ((entities.get(i).x + Sprite.SCALED_SIZE - 1) / 32) == x / Sprite.SCALED_SIZE &&
