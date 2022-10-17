@@ -31,6 +31,11 @@ public class Bomb extends Entity {
         if (timeloop % 20 == 10) {
             img = Sprite.bomb_2.getFxImage();
         }
+
+//        if(timeloop == 70) {
+//            canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = true;
+//        }
+
         if (timeloop == 150) {
             img = Sprite.bomb_exploded.getFxImage();
         }
