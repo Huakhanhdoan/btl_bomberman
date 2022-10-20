@@ -3,17 +3,27 @@ package uet.oop.bomberman.entities;
 import javafx.scene.image.Image;
 
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.explosion.Brick_Explosion;
+import uet.oop.bomberman.entities.explosion.Explosion;
+import uet.oop.bomberman.entities.explosion.Horiontal;
+import uet.oop.bomberman.entities.explosion.Vertical;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.Random;
+import java.awt.*;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomb extends Entity {
     private int timeloop;
+    public static int lever =1;
+
 
     public Bomb(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
+    }
+
+    public void setLever(int lever) {
+        this.lever = lever;
     }
 
     @Override
@@ -37,6 +47,7 @@ public class Bomb extends Entity {
 //        }
 
         if (timeloop == 150) {
+           destroy();
             img = Sprite.bomb_exploded.getFxImage();
         }
         if (timeloop == 155) {
@@ -46,12 +57,13 @@ public class Bomb extends Entity {
             img = Sprite.bomb_exploded2.getFxImage();
 
         }
+
         if (timeloop > 150) {
-            destroy();
+         //   destroy();
 
         }
         if (timeloop == 170) {
-            canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = false;
+     //       canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = false;
             BombermanGame.entities.remove(this);
             timeloop = 0;
         }
@@ -63,29 +75,70 @@ public class Bomb extends Entity {
         int bombY = (y) / Sprite.SCALED_SIZE;
         check_entiny(bombX,bombY);
         if (!canmove[bombX + 1][bombY]) {
-            check_entiny(bombX+1,bombY);
-            animation_explosion(bombX + 1, bombY, true);
+            Explosion explosion = new Horiontal(bombX+1,bombY,Sprite.explosion_horizontal.getFxImage());
+            entities.add(explosion);
+            if(lever==2) {
+                if (!canmove[bombX + 2][bombY]) {
+                    Explosion explosion2 = new Horiontal(bombX + 2, bombY, Sprite.explosion_horizontal.getFxImage());
+                    entities.add(explosion2);
+                }
+                else {
+                    check_brick(bombX+2,bombY);
+                }
+            }
+
         } else {
             check_brick(bombX + 1, bombY);
 
         }
+
         if (!canmove[bombX - 1][bombY]) {
-            check_entiny(bombX-1,bombY);
-            animation_explosion(bombX - 1, bombY, true);
+            Explosion explosion = new Horiontal(x/32-1,y/32,Sprite.explosion_horizontal.getFxImage());
+            entities.add(explosion);
+            if(lever==2) {
+                if (!canmove[bombX - 2][bombY]) {
+                    Explosion explosion2 = new Horiontal(bombX - 2, bombY, Sprite.explosion_horizontal.getFxImage());
+                    entities.add(explosion2);
+                }
+                else {
+                    check_brick(bombX - 2, bombY);
+
+                }
+
+            }
+
         } else {
             check_brick(bombX - 1, bombY);
 
         }
         if (!canmove[bombX][bombY - 1]) {
-            check_entiny(bombX,bombY-1);
-            animation_explosion(bombX, bombY - 1, false);
+            Explosion explosion = new Vertical(x/32,y/32-1,Sprite.explosion_vertical.getFxImage());
+            entities.add(explosion);
+            if(lever==2) {
+                if (!canmove[bombX ][bombY-2]) {
+                    Explosion explosion2 = new Vertical(bombX , bombY-2, Sprite.explosion_vertical.getFxImage());
+                    entities.add(explosion2);
+                }
+                else {
+                    check_brick(bombX,bombY-2);
+                }
+            }
         } else {
             check_brick(bombX, bombY - 1);
 
         }
         if (!canmove[bombX][bombY + 1]) {
-            check_entiny(bombX,bombY+1);
-            animation_explosion(bombX, bombY + 1, false);
+            Explosion explosion = new Vertical(x/32,y/32+1,Sprite.explosion_vertical.getFxImage());
+            entities.add(explosion);
+            if(lever==2) {
+                if (!canmove[bombX ][bombY+2]) {
+                    Explosion explosion2 = new Vertical(bombX , bombY+2, Sprite.explosion_vertical.getFxImage());
+                    entities.add(explosion2);
+                }
+                else {
+                    check_brick(bombX,bombY+2);
+                }
+            }
         } else {
             check_brick(bombX, bombY + 1);
 
@@ -95,6 +148,8 @@ public class Bomb extends Entity {
     // check xem co bick trong pham vi no khong
     public void check_brick(int bombX, int bombY) {
         if (stillObjects.get(25 * (bombY) + bombX) instanceof Brick)  {
+            Entity entity = new Brick_Explosion(bombX,bombY,Sprite.brick_exploded.getFxImage());
+            entities.add(entity);
                 stillObjects.remove(25 * (bombY) + bombX);
                 stillObjects.add(25 * (bombY) + bombX, new Grass(bombX, bombY, Sprite.grass.getFxImage()));
                 canmove[bombX][bombY] = false;
@@ -112,22 +167,4 @@ public class Bomb extends Entity {
         }
     }
 
-    // hoat anh no
-    public void animation_explosion(int bombX, int bombY, boolean isHorizontal) {
-        if (isHorizontal) {
-            if (timeloop > 150 && timeloop < 155) {
-                BombermanGame.gc.drawImage(Sprite.explosion_horizontal.getFxImage(), bombX * Sprite.SCALED_SIZE, bombY * Sprite.SCALED_SIZE);
-            } else if (timeloop < 160)
-                BombermanGame.gc.drawImage(Sprite.explosion_horizontal1.getFxImage(), bombX * Sprite.SCALED_SIZE, bombY * Sprite.SCALED_SIZE);
-            else
-                BombermanGame.gc.drawImage(Sprite.explosion_horizontal2.getFxImage(), bombX * Sprite.SCALED_SIZE, bombY * Sprite.SCALED_SIZE);
-        } else {
-            if (timeloop > 150 && timeloop < 155) {
-                BombermanGame.gc.drawImage(Sprite.explosion_vertical.getFxImage(), bombX * Sprite.SCALED_SIZE, bombY * Sprite.SCALED_SIZE);
-            } else if (timeloop < 160)
-                BombermanGame.gc.drawImage(Sprite.explosion_vertical1.getFxImage(), bombX * Sprite.SCALED_SIZE, bombY * Sprite.SCALED_SIZE);
-            else
-                BombermanGame.gc.drawImage(Sprite.explosion_vertical2.getFxImage(), bombX * Sprite.SCALED_SIZE, bombY * Sprite.SCALED_SIZE);
-        }
-    }
 }

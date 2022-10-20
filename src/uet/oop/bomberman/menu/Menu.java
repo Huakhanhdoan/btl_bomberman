@@ -1,23 +1,21 @@
 package uet.oop.bomberman.menu;
 
 import javafx.animation.AnimationTimer;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.Border;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 
-import static java.awt.Color.CYAN;
-import static java.awt.Color.cyan;
 
 public class Menu extends javafx.scene.control.Menu {
     private int x;
@@ -35,15 +33,28 @@ public class Menu extends javafx.scene.control.Menu {
         ImageView view = new ImageView(test);
         view.setFitWidth(100);
         view.setFitHeight(50);
-        Button button = new Button("START");
-        button.setLayoutX(390);
-        button.setLayoutY(250);
-        button.setScaleX(5);
-        button.setScaleY(2);
-        button.setTextFill(Color.WHITE);
-        button.setBackground(new Background(newGameBgr));
-        button.setStyle("-fx-border-color: blue;");
-        button.setFont(Font.font ("Verdana", FontWeight.BOLD, 11));
+        Button start = new Button("START");
+        start.setLayoutX(390);
+        start.setLayoutY(250);
+        start.setScaleX(5);
+        start.setScaleY(2);
+        start.setTextFill(Color.WHITE);
+        start.setBackground(new Background(newGameBgr));
+      //  start.setStyle("-fx-border-color: blue;");
+        start.setStyle("-fx-background-color: lightblue;");
+        start.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                start.setStyle("-fx-background-color: #FFC125;");
+            }
+        });
+        start.onMouseExitedProperty().set(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                start.setStyle("-fx-background-color: lightblue;");
+            }
+        });
+        start.setFont(Font.font ("Verdana", FontWeight.BOLD, 11));
         Button exit = new Button("EXIT");
         exit.setLayoutX(395);
         exit.setLayoutY(320);
@@ -51,8 +62,19 @@ public class Menu extends javafx.scene.control.Menu {
         exit.setScaleY(2);
         exit.setTextFill(Color.WHITE);
 
-        exit.setStyle("-fx-border-color: blue;");
-
+        exit.setStyle("-fx-background-color: lightblue;");
+        exit.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                exit.setStyle("-fx-background-color: #FFC125;");
+            }
+        });
+        exit.onMouseExitedProperty().set(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                exit.setStyle("-fx-background-color: lightblue;");
+            }
+        });
         exit.setBackground(new Background(newGameBgr));
         exit.setFont(Font.font ("Verdana", FontWeight.BOLD, 11));
         exit.setOnAction(event ->{
@@ -60,10 +82,10 @@ public class Menu extends javafx.scene.control.Menu {
             stage.close();
         } );
 
-        root.getChildren().addAll(menu_,button,exit);
+        root.getChildren().addAll(menu_,start,exit);
 
-        button.setOnAction(event ->  {
-            root.getChildren().remove(button);
+        start.setOnAction(event ->  {
+            root.getChildren().remove(start);
             root.getChildren().remove(menu_);
             root.getChildren().remove(exit);
             timer.start();

@@ -39,7 +39,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     public static int count = 0;
     public static int point = 0;
-    public static int time = 7200;
+    public static int time = 200*60;
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
 
@@ -59,7 +59,8 @@ public class BombermanGame extends Application {
         Group root = new Group();
         Text _point = new Text();
         Text _time = new Text();
-setPoint(root,_time,_point);
+        Text _lives = new Text();
+setPoint(root,_time,_point,_lives);
         root.getChildren().add(canvas);
 
 
@@ -77,9 +78,10 @@ setPoint(root,_time,_point);
             @Override
             public void handle(long l) {
                 time--;
-                updateSetpoint(_point,_time );
+                updateSetpoint(_point,_time ,_lives);
                 render();
                 update();
+
                 if (check_endgame()) {
 
                     reset_game();
@@ -97,7 +99,7 @@ setPoint(root,_time,_point);
         entities.add(bomberman);
         bomberman.setSpeed(2);
         creatEntinys();
-
+//creatItem();
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -179,6 +181,12 @@ setPoint(root,_time,_point);
         entities.add(oneal1);
         entities.add(oneal2);
     }
+    public void creatItem() {
+        Item start = new Item(3,7,Sprite.item_nhay.getFxImage());
+        Item end = new Item(22,7,Sprite.item_nhay.getFxImage());
+        stillObjects.add(start);
+        stillObjects.add(end);
+    }
 
     public void update() {
         for (int i = 0; i < entities.size(); i++) {
@@ -196,8 +204,8 @@ setPoint(root,_time,_point);
     }
 
     public boolean check_endgame() {
-        if (entities.get(0) instanceof Bomber|| time ==0) return false;
-        return true;
+        if (!(entities.get(0) instanceof Bomber) || time <=0) return true;
+        return false;
     }
 
     public void reset_game() {
@@ -222,7 +230,7 @@ setPoint(root,_time,_point);
         }
 
     }
-    public void setPoint( Group root,Text timer,Text point) {
+    public void setPoint( Group root,Text timer,Text point, Text lives) {
         Rectangle rectangle = new Rectangle(0,15*32,25*32,32);
         rectangle.setFill(Color.LIGHTGREEN);
         timer.setX(200);
@@ -230,13 +238,18 @@ setPoint(root,_time,_point);
 
         point.setX(32);
         point.setY(500);
+
+        lives.setX(350);
+        lives.setY(500);
+        lives.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         point.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         timer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        root.getChildren().addAll(rectangle,point,timer);
+        root.getChildren().addAll(rectangle,point,timer,lives);
 
     }
-    public void updateSetpoint(Text _point, Text timer) {
+    public void updateSetpoint(Text _point, Text timer, Text live) {
         _point.setText("Point :"+point);
         timer.setText("Time :"+time/60);
+        live.setText("Lives :"+ entities.get(0).lives_bomber);
     }
 }

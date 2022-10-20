@@ -8,6 +8,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.BombermanGame.canmove;
 
 public abstract class Entity {
+    public int lives_bomber =3;
     //Tọa độ X tính từ góc trái trên trong Canvas
     protected int x;
 
@@ -15,7 +16,7 @@ public abstract class Entity {
     protected int y;
     //toc do di chuyen cua thuc the
     protected int speed =1;
-    protected boolean lives = true;
+    public boolean lives = true;
 protected int timeDie=0;
     public boolean isLives() {
         return lives;

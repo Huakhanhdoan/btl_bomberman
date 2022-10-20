@@ -9,12 +9,17 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import static javafx.scene.input.KeyCode.*;
 import static uet.oop.bomberman.BombermanGame.entities;
+import static uet.oop.bomberman.BombermanGame.time;
 
 
 public class Bomber extends Entity {
     //  private KeyCode direction;
     private KeyCode keycode;
     private Sprite sprite;
+    private boolean check_nhay = true;
+   // private int time_item =0;
+    private boolean itemFlame = true;
+    public int leverBomb =1;
     private boolean keyleft = false;
     private boolean keyright = false;
     private boolean keyup = false;
@@ -166,26 +171,69 @@ public void animation_bomber() {
     public void update() {
 
         if (lives) {
+          //  item_nhay();
+            itemLeverBomb();
             check_colide_enemy();
             moving();
             animation_bomber();
 
-        } else {
-            timeDie++;
-            if (timeDie == 1) {
-                img = Sprite.player_dead1.getFxImage();
-            }
-            if (timeDie == 10) {
-                img = Sprite.player_dead2.getFxImage();
-            }
-            if (timeDie == 100) {
-                BombermanGame.entities.remove(this);
-                timeDie = 0;
 
-            }
+        } else {
+        animation_die();
 
         }
 
+    }
+    public void itemLeverBomb() {
+        if((x+16)/32==4&&(y+16)/32==5&&itemFlame) {
+            itemFlame=false;
+            Bomb.lever=2;
+            entities.remove(entities.size()-1);
+        }
+    }
+//    public void item_nhay() {
+//if(!check_nhay) {
+//    time_item++;
+//    if(time >150) {
+//        check_nhay = true;
+//        time_item=0;
+//    }
+//}
+//      else   {
+//            if ((x + 16) / Sprite.SCALED_SIZE == 3 && (y + 16) / Sprite.SCALED_SIZE == 7&&check_nhay) {
+//                x = 22 * Sprite.SCALED_SIZE;
+//                y=7*Sprite.SCALED_SIZE;
+//                check_nhay = false;
+//            }
+//            if ((x + 16) / Sprite.SCALED_SIZE == 22 && (y + 16) / Sprite.SCALED_SIZE == 7&&check_nhay) {
+//                x = 3 * Sprite.SCALED_SIZE;
+//                y=7*Sprite.SCALED_SIZE;
+//                check_nhay = false;
+//            }
+//        }
+//     //  else check_nhay=true;
+//    }
+    public void animation_die() {
+        timeDie++;
+        if (timeDie == 1) {
+            img = Sprite.player_dead1.getFxImage();
+        }
+        if (timeDie == 10) {
+            img = Sprite.player_dead2.getFxImage();
+        }
+        if (timeDie == 100) {
+            if(this.lives_bomber>1) {
+                lives_bomber--;
+                lives = true;
+                x = 32;
+                y = 32;
+            }
+            else {
+                BombermanGame.entities.remove(this);
+            }
+            timeDie = 0;
+
+        }
     }
 
 

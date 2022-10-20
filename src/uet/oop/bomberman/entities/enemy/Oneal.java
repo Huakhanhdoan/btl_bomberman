@@ -34,7 +34,7 @@ public class Oneal extends Entity {
         }
         while (true) {
 
-            if(AI()) break;
+          //  if(AI()) break;
                 if (direction == 1 && canMove_enemy(x + speed, y)) break;
                 if (direction == 2 && canMove_enemy(x - speed, y)) break;
                 if (direction == 3 && canMove_enemy(x, y + speed)) break;
