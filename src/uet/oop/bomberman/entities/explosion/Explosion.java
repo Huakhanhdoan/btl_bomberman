@@ -21,10 +21,17 @@ public abstract class Explosion extends Entity {
     public void check_entiny(int bombX, int bombY) {
         int size = entities.size();
         for (int i = 0; i < size; i++) {
-            if(((entities.get(i).getX()/Sprite.SCALED_SIZE)==bombX&&(entities.get(i).getY()/Sprite.SCALED_SIZE)==bombY)
-                    ||((entities.get(i).getX()+Sprite.SCALED_SIZE-1)/32)==bombX&&((entities.get(i).getY()+Sprite.SCALED_SIZE-1)/32)==bombY) {
+            int left_up_X = entities.get(i).getX();
+            int left_up_Y = entities.get(i).getY();
+            int left_down_Y = left_up_Y + Sprite.SCALED_SIZE;
+            int right_up_X = left_up_X+Sprite.SCALED_SIZE;
+
+            if((left_up_X/Sprite.SCALED_SIZE==bombX|| right_up_X/Sprite.SCALED_SIZE==bombX)
+                    &&(left_up_Y/Sprite.SCALED_SIZE==bombY||left_down_Y/Sprite.SCALED_SIZE==bombY)
+            ) {
                 entities.get(i).setLives(false);
             }
+
         }
     }
 

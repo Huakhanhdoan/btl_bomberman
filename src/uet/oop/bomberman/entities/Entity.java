@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.canmove;
@@ -44,7 +45,15 @@ protected int timeDie=0;
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
+        if(BombermanGame.entities.get(0).getX()>(24*24)&&BombermanGame.entities.get(0).getX()<17*Sprite.SCALED_SIZE) {
+            gc.drawImage(img, x-(BombermanGame.entities.get(0).getX()-(24*24)), y);
+        }
+
+       else if(BombermanGame.entities.get(0).getX()>=17*Sprite.SCALED_SIZE) {
+            gc.drawImage(img, x-(17*Sprite.SCALED_SIZE-24*24), y);
+        }
+       else
+            gc.drawImage(img, x, y);
     }
 
     public abstract void update();

@@ -10,7 +10,7 @@ public class Vertical extends Explosion{
     }
     @Override
     public void update() {
-        check_entiny(x/32,y/32);
+        check_entiny(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE);
         if(timeDie==0) {
             img= Sprite.explosion_vertical.getFxImage();
         }

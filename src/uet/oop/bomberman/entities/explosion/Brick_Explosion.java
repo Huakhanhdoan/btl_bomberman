@@ -25,7 +25,7 @@ public class Brick_Explosion extends Explosion{
             BombermanGame.entities.remove(this);
             timeDie=0;
             if(x/Sprite.SCALED_SIZE==4&&y/Sprite.SCALED_SIZE==5) {
-                Item lever = new Item(x/32,y/32,Sprite.leverBomb.getFxImage());
+                Item lever = new Item(4,5,Sprite.leverBomb.getFxImage());
                 BombermanGame.entities.add(lever);
             }
         }

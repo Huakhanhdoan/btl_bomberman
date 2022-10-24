@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
@@ -8,14 +9,13 @@ import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static javafx.scene.input.KeyCode.*;
-import static uet.oop.bomberman.BombermanGame.entities;
-import static uet.oop.bomberman.BombermanGame.time;
+import static uet.oop.bomberman.BombermanGame.*;
 
 
 public class Bomber extends Entity {
-    //  private KeyCode direction;
+    public int wordX;
+    public int wordY;
     private KeyCode keycode;
-    private Sprite sprite;
     private boolean check_nhay = true;
    // private int time_item =0;
     private boolean itemFlame = true;
@@ -26,12 +26,10 @@ public class Bomber extends Entity {
     private boolean keydown = false;
     public int count = 0;
     public int khunghinh = 1;
-
     public String back = "";
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
-        sprite = Sprite.player_right;
     }
 
 
@@ -46,11 +44,12 @@ public class Bomber extends Entity {
 
             y -= speed;
 
+
         }
         if (keydown && canMove(x, y + speed)) {
 
             y += speed;
-
+root.getTranslateX();
         }
         if (keyleft && canMove(x - speed, y)) {
 
@@ -63,6 +62,7 @@ public class Bomber extends Entity {
             x += speed;
 
         }
+        easy_move();
 
     }
 
@@ -111,17 +111,22 @@ public class Bomber extends Entity {
 
     }
 
-    // kiem tra va cham voi enemy
+    // kiem tra va cham voi enemy sua lai
     public void check_colide_enemy() {
+       int bomerX = (x+24)/Sprite.SCALED_SIZE;
+       int bomerY = (y+24)/Sprite.SCALED_SIZE;
         int size = entities.size();
         for (int i = 1; i < size; i++) {
             if (entities.get(i) instanceof Enemy||entities.get(i) instanceof Oneal) {
-                if (((entities.get(i).x / Sprite.SCALED_SIZE) == x / Sprite.SCALED_SIZE
-                        && (entities.get(i).y / Sprite.SCALED_SIZE) == y / Sprite.SCALED_SIZE)
-                        || ((entities.get(i).x + Sprite.SCALED_SIZE - 1) / 32) == x / Sprite.SCALED_SIZE &&
-                        ((entities.get(i).y + Sprite.SCALED_SIZE - 1) / 32) == y / Sprite.SCALED_SIZE) {
+                if(bomerX==(entities.get(i).x+24)/Sprite.SCALED_SIZE && bomerY==(entities.get(i).y+24)/Sprite.SCALED_SIZE) {
                     setLives(false);
                 }
+//                if (((entities.get(i).x / Sprite.SCALED_SIZE) == x / Sprite.SCALED_SIZE
+//                        && (entities.get(i).y / Sprite.SCALED_SIZE) == y / Sprite.SCALED_SIZE)
+//                        || ((entities.get(i).x + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE) == x / Sprite.SCALED_SIZE &&
+//                        ((entities.get(i).y + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE) == y / Sprite.SCALED_SIZE) {
+//                    setLives(false);
+//                }
             }
         }
 
@@ -171,7 +176,7 @@ public void animation_bomber() {
     public void update() {
 
         if (lives) {
-          //  item_nhay();
+            item_nhay();
             itemLeverBomb();
             check_colide_enemy();
             moving();
@@ -185,34 +190,33 @@ public void animation_bomber() {
 
     }
     public void itemLeverBomb() {
-        if((x+16)/32==4&&(y+16)/32==5&&itemFlame) {
+        if((x+24)/Sprite.SCALED_SIZE==4&&(y+24)/Sprite.SCALED_SIZE==5&&itemFlame) {
             itemFlame=false;
             Bomb.lever=2;
             entities.remove(entities.size()-1);
         }
     }
-//    public void item_nhay() {
-//if(!check_nhay) {
-//    time_item++;
-//    if(time >150) {
-//        check_nhay = true;
-//        time_item=0;
-//    }
-//}
-//      else   {
-//            if ((x + 16) / Sprite.SCALED_SIZE == 3 && (y + 16) / Sprite.SCALED_SIZE == 7&&check_nhay) {
-//                x = 22 * Sprite.SCALED_SIZE;
-//                y=7*Sprite.SCALED_SIZE;
-//                check_nhay = false;
-//            }
-//            if ((x + 16) / Sprite.SCALED_SIZE == 22 && (y + 16) / Sprite.SCALED_SIZE == 7&&check_nhay) {
-//                x = 3 * Sprite.SCALED_SIZE;
-//                y=7*Sprite.SCALED_SIZE;
-//                check_nhay = false;
-//            }
-//        }
+    public void item_nhay() {
+       // System.out.println(check_nhay);
+        if(((x+24)/Sprite.SCALED_SIZE!= 3 || (x+24!=22))&&y/Sprite.SCALED_SIZE !=7) {
+            check_nhay=true;
+        }
+
+
+
+            if ((x + 24) / Sprite.SCALED_SIZE == 3 && (y + 24) / Sprite.SCALED_SIZE == 7&&check_nhay) {
+                x = 22 * Sprite.SCALED_SIZE;
+                y=7*Sprite.SCALED_SIZE;
+                check_nhay = false;
+            }
+            if ((x + 24) / Sprite.SCALED_SIZE == 22 && (y + 24) / Sprite.SCALED_SIZE == 7&&check_nhay) {
+                x = 3 * Sprite.SCALED_SIZE;
+                y=7*Sprite.SCALED_SIZE;
+                check_nhay = false;
+            }
+        }
 //     //  else check_nhay=true;
-//    }
+
     public void animation_die() {
         timeDie++;
         if (timeDie == 1) {
@@ -225,8 +229,8 @@ public void animation_bomber() {
             if(this.lives_bomber>1) {
                 lives_bomber--;
                 lives = true;
-                x = 32;
-                y = 32;
+                x = Sprite.SCALED_SIZE;
+                y = Sprite.SCALED_SIZE;
             }
             else {
                 BombermanGame.entities.remove(this);
@@ -235,7 +239,24 @@ public void animation_bomber() {
 
         }
     }
+public void easy_move() {
+    if ((!canMove(x + speed, y) && keyright) ||(!canMove(x - speed, y) && keyleft)) {
+        if (y % Sprite.SCALED_SIZE < 16) {
+            y -= speed;
+        } else {
+            y += speed;
+        }
+    }
 
+    if ((!canMove(x, y + speed) && keydown)||(!canMove(x, y - speed) && keyup)) {
+        if (x % Sprite.SCALED_SIZE < 16) {
+            x -= speed;
+        } else {
+            x += speed;
+        }
+    }
+
+}
 
 }
 

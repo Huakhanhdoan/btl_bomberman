@@ -13,6 +13,7 @@ public class Oneal extends Entity {
     private int timeloop;
 
 
+
     public Oneal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
@@ -27,31 +28,22 @@ public class Oneal extends Entity {
         timeloop++;
 
 
-        if (x % 32 == 0 &&y % 32 == 0) {
-            randomd();
-            // System.out.println(1);
-            //   if (!AI()) direction = 1;
-        }
-        while (true) {
-
-          //  if(AI()) break;
+            if (x % Sprite.SCALED_SIZE == 0 && y % Sprite.SCALED_SIZE == 0) {
+                randomd();
+            }
+            while (true) {
+                //  if(AI()) break;
                 if (direction == 1 && canMove_enemy(x + speed, y)) break;
                 if (direction == 2 && canMove_enemy(x - speed, y)) break;
                 if (direction == 3 && canMove_enemy(x, y + speed)) break;
                 if (direction == 4 && canMove_enemy(x, y - speed)) break;
-
-              else
+                else
                     randomd();
-
-        }
-
-        moving_enemy();
-
-        animation_enemy();
-
-        if (timeloop == 40)
-            timeloop = 0;
-      //  moving_enemy();
+            }
+            moving_enemy();
+            animation_enemy();
+            if (timeloop == 40)
+                timeloop = 0;
 
     }
 
@@ -98,44 +90,52 @@ public class Oneal extends Entity {
                 }
             }
         } else {
+            if(timeDie ==0) {
+                img = Sprite.oneal_dead.getFxImage();
+                direction = 5;
+            }
             timeDie++;
-            direction = 5;
-            img = Sprite.oneal_dead.getFxImage();
+
+
         }
         if (timeDie == 40) {
 point+=150;
-            timeDie = 0;
-            BombermanGame.entities.remove(this);
-Entity enemy1 = new Enemy(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE,Sprite.balloom_left1.getFxImage());
-            Entity enemy2 = new Enemy(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE,Sprite.balloom_left1.getFxImage());
+
+            int xunit = (x+24)/Sprite.SCALED_SIZE;
+            int yunit = (y+24)/Sprite.SCALED_SIZE;
+            Entity enemy1 = new Enemy(xunit,yunit,Sprite.balloom_left1.getFxImage());
+            Entity enemy2 = new Enemy(xunit,yunit,Sprite.balloom_left1.getFxImage());
             BombermanGame.entities.add(enemy1);
             BombermanGame.entities.add(enemy2);
+           BombermanGame.entities.remove(this);
+            timeDie = 0;
+
         }
     }
 
     private boolean AI() {
         double kc = distance(x, y);
-        if (canMove_enemy(x + speed, y)&&x % 32 == speed &&y % 32 == 0) {
+        if (canMove_enemy(x + speed, y)&&x % Sprite.SCALED_SIZE == speed &&y % Sprite.SCALED_SIZE == 0) {
             if (kc > distance(x + speed, y)) {
                 direction = 1;
                 return true;
             }
         }
-        if (canMove_enemy(x - speed, y)&&(x-speed) % 32 == 0 &&y % 32 == 0) {
+        if (canMove_enemy(x - speed, y)&&(x-speed) % Sprite.SCALED_SIZE == 0 &&y % Sprite.SCALED_SIZE == 0) {
             if (kc > distance(x - speed, y)) {
                 direction = 2;
                 return true;
             }
 
         }
-        if (canMove_enemy(x, y + speed)&&x % 32 == 0 &&y % 32 == speed) {
+        if (canMove_enemy(x, y + speed)&&x % Sprite.SCALED_SIZE == 0 &&y % Sprite.SCALED_SIZE == speed) {
             if (kc > distance(x, y + speed)) {
                 direction = 3;
                 return true;
             }
 
         }
-        if (canMove_enemy(x, y - speed)&&x % 32 == 0 &&(y-speed) % 32 == 0) {
+        if (canMove_enemy(x, y - speed)&&x % Sprite.SCALED_SIZE == 0 &&(y-speed) % Sprite.SCALED_SIZE == 0) {
             if (kc > distance(x, y - speed)) {
                 direction = 4;
                 return true;

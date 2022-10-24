@@ -3,7 +3,9 @@ package uet.oop.bomberman;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Camera;
 import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -33,10 +35,10 @@ import java.util.Scanner;
 public class BombermanGame extends Application {
 
     public static final int WIDTH = 25;
-    public static final int HEIGHT = 15;
+    public static final int HEIGHT = 13;
     public static boolean[][] canmove = new boolean[50][50];
     public static GraphicsContext gc;
-    private Canvas canvas;
+    public Canvas canvas;
     public static int count = 0;
     public static int point = 0;
     public static int time = 200*60;
@@ -47,16 +49,20 @@ public class BombermanGame extends Application {
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
-
+public static Group root = new Group();
     @Override
     public void start(Stage stage) throws IOException {
         // Tao Canvas
 
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT+32);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-5*Sprite.SCALED_SIZE, Sprite.SCALED_SIZE * (HEIGHT+1));
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
-        Group root = new Group();
+//
+//        Camera camera = new PerspectiveCamera();
+//        root.translateXProperty().set(WIDTH/2);
+//        root.translateYProperty().set(HEIGHT/2);
+      //  root.translateZProperty().set(-300);
         Text _point = new Text();
         Text _time = new Text();
         Text _lives = new Text();
@@ -99,7 +105,7 @@ setPoint(root,_time,_point,_lives);
         entities.add(bomberman);
         bomberman.setSpeed(2);
         creatEntinys();
-//creatItem();
+creatItem();
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -141,7 +147,7 @@ setPoint(root,_time,_point,_lives);
 
         File myObj = new File("src\\uet\\oop\\bomberman\\map.txt");
         Scanner myReader = new Scanner(myObj);
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 13; i++) {
             for (int j = 0; j < 25; j++) {
                 Entity object;
                 int data = myReader.nextInt();
@@ -169,10 +175,10 @@ setPoint(root,_time,_point,_lives);
     public void creatEntinys() {
 
         Entity enemy = new Enemy(10, 1, Sprite.balloom_left1.getFxImage());
-        Entity enemy2 = new Enemy(21, 13, Sprite.balloom_left1.getFxImage());
+        Entity enemy2 = new Enemy(21, 11, Sprite.balloom_left1.getFxImage());
         Entity enemy3 = new Enemy(3, 11, Sprite.balloom_left1.getFxImage());
         Entity oneal1 = new Oneal(19, 7, Sprite.oneal_left1.getFxImage());
-        Entity oneal2 = new Oneal(11, 13, Sprite.oneal_left1.getFxImage());
+        Entity oneal2 = new Oneal(11, 11, Sprite.oneal_left1.getFxImage());
 
 
         entities.add(enemy);
@@ -207,11 +213,17 @@ setPoint(root,_time,_point,_lives);
         if (!(entities.get(0) instanceof Bomber) || time <=0) return true;
         return false;
     }
+    public boolean check_wingame() {
+        if(entities.size()==1 &&entities.get(0) instanceof Bomber ) {
+            return true;
+        }
+        return false;
+    }
 
     public void reset_game() {
         count++;
         Image image = new Image("/textures/gameover.jpg");
-        gc.drawImage(image, 0, 0, 25 * Sprite.SCALED_SIZE, 16 * Sprite.SCALED_SIZE);
+        gc.drawImage(image, 0, 0, 25 * Sprite.SCALED_SIZE, 14 * Sprite.SCALED_SIZE);
         if (count == 70) {
 
             entities.clear();
@@ -219,6 +231,7 @@ setPoint(root,_time,_point,_lives);
             Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
             entities.add(bomberman);
             bomberman.setSpeed(2);
+
             creatEntinys();
             count = 0;
             try {
@@ -226,21 +239,22 @@ setPoint(root,_time,_point,_lives);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            creatItem();
 
         }
 
     }
     public void setPoint( Group root,Text timer,Text point, Text lives) {
-        Rectangle rectangle = new Rectangle(0,15*32,25*32,32);
+        Rectangle rectangle = new Rectangle(0,13*Sprite.SCALED_SIZE,20*Sprite.SCALED_SIZE,Sprite.SCALED_SIZE);
         rectangle.setFill(Color.LIGHTGREEN);
         timer.setX(200);
-        timer.setY(500);
+        timer.setY(13*Sprite.SCALED_SIZE+30);
 
-        point.setX(32);
-        point.setY(500);
+        point.setX(Sprite.SCALED_SIZE);
+        point.setY(13*Sprite.SCALED_SIZE+30);
 
         lives.setX(350);
-        lives.setY(500);
+        lives.setY(13*Sprite.SCALED_SIZE+30);
         lives.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         point.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         timer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));

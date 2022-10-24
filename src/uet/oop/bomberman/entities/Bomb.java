@@ -93,7 +93,7 @@ public class Bomb extends Entity {
         }
 
         if (!canmove[bombX - 1][bombY]) {
-            Explosion explosion = new Horiontal(x/32-1,y/32,Sprite.explosion_horizontal.getFxImage());
+            Explosion explosion = new Horiontal(x/Sprite.SCALED_SIZE-1,y/Sprite.SCALED_SIZE,Sprite.explosion_horizontal.getFxImage());
             entities.add(explosion);
             if(lever==2) {
                 if (!canmove[bombX - 2][bombY]) {
@@ -112,7 +112,7 @@ public class Bomb extends Entity {
 
         }
         if (!canmove[bombX][bombY - 1]) {
-            Explosion explosion = new Vertical(x/32,y/32-1,Sprite.explosion_vertical.getFxImage());
+            Explosion explosion = new Vertical(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE-1,Sprite.explosion_vertical.getFxImage());
             entities.add(explosion);
             if(lever==2) {
                 if (!canmove[bombX ][bombY-2]) {
@@ -128,7 +128,7 @@ public class Bomb extends Entity {
 
         }
         if (!canmove[bombX][bombY + 1]) {
-            Explosion explosion = new Vertical(x/32,y/32+1,Sprite.explosion_vertical.getFxImage());
+            Explosion explosion = new Vertical(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE+1,Sprite.explosion_vertical.getFxImage());
             entities.add(explosion);
             if(lever==2) {
                 if (!canmove[bombX ][bombY+2]) {
@@ -161,7 +161,8 @@ public class Bomb extends Entity {
         int size = entities.size();
         for (int i = 0; i < size; i++) {
             if(((entities.get(i).x/Sprite.SCALED_SIZE)==bombX&&(entities.get(i).y/Sprite.SCALED_SIZE)==bombY)
-                    ||((entities.get(i).x+Sprite.SCALED_SIZE-1)/32)==bombX&&((entities.get(i).y+Sprite.SCALED_SIZE-1)/32)==bombY) {
+                    ||((entities.get(i).x+Sprite.SCALED_SIZE-1)/Sprite.SCALED_SIZE)==bombX
+                    &&((entities.get(i).y+Sprite.SCALED_SIZE-1)/Sprite.SCALED_SIZE)==bombY) {
                 entities.get(i).setLives(false);
             }
         }

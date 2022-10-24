@@ -14,7 +14,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import uet.oop.bomberman.graphics.Sprite;
 
+import static uet.oop.bomberman.BombermanGame.HEIGHT;
+import static uet.oop.bomberman.BombermanGame.WIDTH;
 
 
 public class Menu extends javafx.scene.control.Menu {
@@ -26,16 +29,12 @@ public class Menu extends javafx.scene.control.Menu {
         Image image = new Image("/textures/menu.jpg");
 
         ImageView menu_ = new ImageView(image);
-        menu_.setFitHeight(16*32);
-        menu_.setFitWidth(25*32);
+        menu_.setFitWidth(Sprite.SCALED_SIZE * WIDTH-5*Sprite.SCALED_SIZE);
+        menu_.setFitHeight(Sprite.SCALED_SIZE * (HEIGHT+1));
         BackgroundImage newGameBgr = new BackgroundImage(image, null, null, null, null);
-        Image test= new Image("/sprites/newgame.png");
-        ImageView view = new ImageView(test);
-        view.setFitWidth(100);
-        view.setFitHeight(50);
         Button start = new Button("START");
-        start.setLayoutX(390);
-        start.setLayoutY(250);
+        start.setLayoutX(440);
+        start.setLayoutY(350);
         start.setScaleX(5);
         start.setScaleY(2);
         start.setTextFill(Color.WHITE);
@@ -56,8 +55,8 @@ public class Menu extends javafx.scene.control.Menu {
         });
         start.setFont(Font.font ("Verdana", FontWeight.BOLD, 11));
         Button exit = new Button("EXIT");
-        exit.setLayoutX(395);
-        exit.setLayoutY(320);
+        exit.setLayoutX(450);
+        exit.setLayoutY(420);
         exit.setScaleX(5);
         exit.setScaleY(2);
         exit.setTextFill(Color.WHITE);
