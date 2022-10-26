@@ -46,14 +46,14 @@ protected int timeDie=0;
 
     public void render(GraphicsContext gc) {
         if(BombermanGame.entities.get(0).getX()>(24*24)&&BombermanGame.entities.get(0).getX()<17*Sprite.SCALED_SIZE) {
-            gc.drawImage(img, x-(BombermanGame.entities.get(0).getX()-(24*24)), y);
+            gc.drawImage(img, x-(BombermanGame.entities.get(0).getX()-(24*24)), y+Sprite.SCALED_SIZE);
         }
 
        else if(BombermanGame.entities.get(0).getX()>=17*Sprite.SCALED_SIZE) {
-            gc.drawImage(img, x-(17*Sprite.SCALED_SIZE-24*24), y);
+            gc.drawImage(img, x-(17*Sprite.SCALED_SIZE-24*24), y+Sprite.SCALED_SIZE);
         }
        else
-            gc.drawImage(img, x, y);
+            gc.drawImage(img, x, y+Sprite.SCALED_SIZE);
     }
 
     public abstract void update();

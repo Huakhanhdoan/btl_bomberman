@@ -39,21 +39,21 @@ public class Menu extends javafx.scene.control.Menu {
         start.setScaleY(2);
         start.setTextFill(Color.WHITE);
         start.setBackground(new Background(newGameBgr));
-      //  start.setStyle("-fx-border-color: blue;");
-        start.setStyle("-fx-background-color: lightblue;");
+
         start.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                start.setStyle("-fx-background-color: #FFC125;");
+                start.setTextFill(Color.RED);
+
             }
         });
         start.onMouseExitedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                start.setStyle("-fx-background-color: lightblue;");
+                start.setTextFill(Color.WHITE);
             }
         });
-        start.setFont(Font.font ("Verdana", FontWeight.BOLD, 11));
+        start.setFont(Font.font ("Impact", FontWeight.BOLD, 15));
         Button exit = new Button("EXIT");
         exit.setLayoutX(450);
         exit.setLayoutY(420);
@@ -61,21 +61,21 @@ public class Menu extends javafx.scene.control.Menu {
         exit.setScaleY(2);
         exit.setTextFill(Color.WHITE);
 
-        exit.setStyle("-fx-background-color: lightblue;");
+
         exit.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                exit.setStyle("-fx-background-color: #FFC125;");
+                exit.setTextFill(Color.RED);
             }
         });
         exit.onMouseExitedProperty().set(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                exit.setStyle("-fx-background-color: lightblue;");
+                exit.setTextFill(Color.WHITE);
             }
         });
         exit.setBackground(new Background(newGameBgr));
-        exit.setFont(Font.font ("Verdana", FontWeight.BOLD, 11));
+        exit.setFont(Font.font ("Impact", FontWeight.BOLD, 15));
         exit.setOnAction(event ->{
 
             stage.close();

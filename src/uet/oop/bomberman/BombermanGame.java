@@ -3,10 +3,7 @@ package uet.oop.bomberman;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.Camera;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -19,7 +16,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.enemy.Enemy;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
@@ -54,15 +53,12 @@ public static Group root = new Group();
     public void start(Stage stage) throws IOException {
         // Tao Canvas
 
+
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-5*Sprite.SCALED_SIZE, Sprite.SCALED_SIZE * (HEIGHT+1));
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
 //
-//        Camera camera = new PerspectiveCamera();
-//        root.translateXProperty().set(WIDTH/2);
-//        root.translateYProperty().set(HEIGHT/2);
-      //  root.translateZProperty().set(-300);
         Text _point = new Text();
         Text _time = new Text();
         Text _lives = new Text();
@@ -72,6 +68,7 @@ setPoint(root,_time,_point,_lives);
 
         // Tao scene
         Scene scene = new Scene(root);
+       // scene.setCursor(new ImageCursor(new Image("/sprites/icon.png")));
         stage.setTitle("Bomberman");
         stage.getIcons().add(new Image("/sprites/icon.png"));
 
@@ -189,7 +186,7 @@ creatItem();
     }
     public void creatItem() {
         Item start = new Item(3,7,Sprite.item_nhay.getFxImage());
-        Item end = new Item(22,7,Sprite.item_nhay.getFxImage());
+        Item end = new Item(21,7,Sprite.item_nhay.getFxImage());
         stillObjects.add(start);
         stillObjects.add(end);
     }
@@ -245,16 +242,16 @@ creatItem();
 
     }
     public void setPoint( Group root,Text timer,Text point, Text lives) {
-        Rectangle rectangle = new Rectangle(0,13*Sprite.SCALED_SIZE,20*Sprite.SCALED_SIZE,Sprite.SCALED_SIZE);
+        Rectangle rectangle = new Rectangle(0,0,20*Sprite.SCALED_SIZE,Sprite.SCALED_SIZE);
         rectangle.setFill(Color.LIGHTGREEN);
         timer.setX(200);
-        timer.setY(13*Sprite.SCALED_SIZE+30);
+        timer.setY(30);
 
         point.setX(Sprite.SCALED_SIZE);
-        point.setY(13*Sprite.SCALED_SIZE+30);
+        point.setY(30);
 
         lives.setX(350);
-        lives.setY(13*Sprite.SCALED_SIZE+30);
+        lives.setY(30);
         lives.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         point.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         timer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));

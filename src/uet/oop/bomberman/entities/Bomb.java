@@ -9,7 +9,6 @@ import uet.oop.bomberman.entities.explosion.Horiontal;
 import uet.oop.bomberman.entities.explosion.Vertical;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.awt.*;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -29,22 +28,22 @@ public class Bomb extends Entity {
     @Override
     public void update() {
         animation();
+
     }
 
     // hoat anh bomb no
     public void animation() {
 
         timeloop++;
+        if(bomb_canmove()) {
+            canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = true;
+        }
         if (timeloop % 20 == 0) {
             img = Sprite.bomb_1.getFxImage();
         }
         if (timeloop % 20 == 10) {
             img = Sprite.bomb_2.getFxImage();
         }
-
-//        if(timeloop == 70) {
-//            canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = true;
-//        }
 
         if (timeloop == 150) {
            destroy();
@@ -58,13 +57,9 @@ public class Bomb extends Entity {
 
         }
 
-        if (timeloop > 150) {
-         //   destroy();
-
-        }
         if (timeloop == 170) {
-     //       canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = false;
             BombermanGame.entities.remove(this);
+            canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = false;
             timeloop = 0;
         }
     }
@@ -167,5 +162,26 @@ public class Bomb extends Entity {
             }
         }
     }
+    public boolean bomb_canmove() {
+   int bombX = x/48;
+   int bombY = y/48;
+            int size = entities.size();
+            for (int i = 0; i < size; i++) {
+                int left_up_X = entities.get(i).getX();
+                int left_up_Y = entities.get(i).getY();
+                int left_down_Y = left_up_Y + Sprite.SCALED_SIZE;
+                int right_up_X = left_up_X+Sprite.SCALED_SIZE;
+
+                if(((left_up_X/Sprite.SCALED_SIZE==bombX|| right_up_X/Sprite.SCALED_SIZE==bombX)
+                        &&(left_up_Y/Sprite.SCALED_SIZE==bombY||left_down_Y/Sprite.SCALED_SIZE==bombY))
+                        && !(entities.get(i).equals(this))
+                ) {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
 
 }

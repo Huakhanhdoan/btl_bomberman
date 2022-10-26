@@ -49,7 +49,7 @@ public class Bomber extends Entity {
         if (keydown && canMove(x, y + speed)) {
 
             y += speed;
-root.getTranslateX();
+
         }
         if (keyleft && canMove(x - speed, y)) {
 
@@ -193,23 +193,30 @@ public void animation_bomber() {
         if((x+24)/Sprite.SCALED_SIZE==4&&(y+24)/Sprite.SCALED_SIZE==5&&itemFlame) {
             itemFlame=false;
             Bomb.lever=2;
-            entities.remove(entities.size()-1);
+
+//            for (int i = 0; i < entities.size(); i++) {
+//                if(entities.get(i).img.equals(Sprite.leverBomb.getFxImage())) {
+//                    entities.get(i).setLives(false);
+                   entities.remove(entities.get(entities.size()-1));
+//                    return;
+//                }
+//            }
+
         }
     }
     public void item_nhay() {
-       // System.out.println(check_nhay);
-        if(((x+24)/Sprite.SCALED_SIZE!= 3 || (x+24!=22))&&y/Sprite.SCALED_SIZE !=7) {
+        if(!(((x+24)/Sprite.SCALED_SIZE== 3 || (x+24)/Sprite.SCALED_SIZE==21)&&(y+24)/Sprite.SCALED_SIZE ==7)) {
             check_nhay=true;
         }
 
 
 
             if ((x + 24) / Sprite.SCALED_SIZE == 3 && (y + 24) / Sprite.SCALED_SIZE == 7&&check_nhay) {
-                x = 22 * Sprite.SCALED_SIZE;
+                x = 21 * Sprite.SCALED_SIZE;
                 y=7*Sprite.SCALED_SIZE;
                 check_nhay = false;
             }
-            if ((x + 24) / Sprite.SCALED_SIZE == 22 && (y + 24) / Sprite.SCALED_SIZE == 7&&check_nhay) {
+            if ((x + 24) / Sprite.SCALED_SIZE == 21 && (y + 24) / Sprite.SCALED_SIZE == 7&&check_nhay) {
                 x = 3 * Sprite.SCALED_SIZE;
                 y=7*Sprite.SCALED_SIZE;
                 check_nhay = false;
@@ -224,6 +231,9 @@ public void animation_bomber() {
         }
         if (timeDie == 10) {
             img = Sprite.player_dead2.getFxImage();
+        }
+        if (timeDie == 20) {
+            img = Sprite.player_dead3.getFxImage();
         }
         if (timeDie == 100) {
             if(this.lives_bomber>1) {

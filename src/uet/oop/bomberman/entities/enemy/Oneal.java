@@ -14,6 +14,7 @@ public class Oneal extends Entity {
 
 
 
+
     public Oneal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
@@ -32,7 +33,6 @@ public class Oneal extends Entity {
                 randomd();
             }
             while (true) {
-                //  if(AI()) break;
                 if (direction == 1 && canMove_enemy(x + speed, y)) break;
                 if (direction == 2 && canMove_enemy(x - speed, y)) break;
                 if (direction == 3 && canMove_enemy(x, y + speed)) break;
@@ -99,12 +99,12 @@ public class Oneal extends Entity {
 
         }
         if (timeDie == 40) {
-point+=150;
+point+=200;
 
             int xunit = (x+24)/Sprite.SCALED_SIZE;
             int yunit = (y+24)/Sprite.SCALED_SIZE;
-            Entity enemy1 = new Enemy(xunit,yunit,Sprite.balloom_left1.getFxImage());
-            Entity enemy2 = new Enemy(xunit,yunit,Sprite.balloom_left1.getFxImage());
+            Entity enemy1 = new Doll(xunit,yunit,Sprite.balloom_left1.getFxImage());
+            Entity enemy2 = new Doll(xunit,yunit,Sprite.balloom_left1.getFxImage());
             BombermanGame.entities.add(enemy1);
             BombermanGame.entities.add(enemy2);
            BombermanGame.entities.remove(this);
@@ -113,41 +113,4 @@ point+=150;
         }
     }
 
-    private boolean AI() {
-        double kc = distance(x, y);
-        if (canMove_enemy(x + speed, y)&&x % Sprite.SCALED_SIZE == speed &&y % Sprite.SCALED_SIZE == 0) {
-            if (kc > distance(x + speed, y)) {
-                direction = 1;
-                return true;
-            }
-        }
-        if (canMove_enemy(x - speed, y)&&(x-speed) % Sprite.SCALED_SIZE == 0 &&y % Sprite.SCALED_SIZE == 0) {
-            if (kc > distance(x - speed, y)) {
-                direction = 2;
-                return true;
-            }
-
-        }
-        if (canMove_enemy(x, y + speed)&&x % Sprite.SCALED_SIZE == 0 &&y % Sprite.SCALED_SIZE == speed) {
-            if (kc > distance(x, y + speed)) {
-                direction = 3;
-                return true;
-            }
-
-        }
-        if (canMove_enemy(x, y - speed)&&x % Sprite.SCALED_SIZE == 0 &&(y-speed) % Sprite.SCALED_SIZE == 0) {
-            if (kc > distance(x, y - speed)) {
-                direction = 4;
-                return true;
-            }
-        }
-        return false;
-
-    }
-
-    private double distance(int x, int y) {
-
-        double kc = Math.abs(x - BombermanGame.entities.get(0).getX()) + Math.abs(y - BombermanGame.entities.get(0).getY());
-        return kc;
-    }
 }
