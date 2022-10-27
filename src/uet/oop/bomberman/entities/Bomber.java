@@ -8,6 +8,9 @@ import uet.oop.bomberman.entities.enemy.Enemy;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static javafx.scene.input.KeyCode.*;
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -27,6 +30,7 @@ public class Bomber extends Entity {
     public int count = 0;
     public int khunghinh = 1;
     public String back = "";
+    public static List<Bomb> bombList = new ArrayList<>();
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -94,6 +98,9 @@ public class Bomber extends Entity {
             keyup = false;
             keyleft = false;
             keydown = false;
+        }
+        if(keycode==SPACE) {
+            creat_bomb();
         }
 
     }
@@ -248,6 +255,14 @@ public void animation_bomber() {
             timeDie = 0;
 
         }
+    }
+    public void creat_bomb() {
+        if(bombList.isEmpty()) {
+            Bomb bomb = new Bomb((x+24)/Sprite.SCALED_SIZE,(y+24)/Sprite.SCALED_SIZE,Sprite.bomb.getFxImage());
+            entities.add(bomb);
+            bombList.add(bomb);
+        }
+
     }
 public void easy_move() {
     if ((!canMove(x + speed, y) && keyright) ||(!canMove(x - speed, y) && keyleft)) {

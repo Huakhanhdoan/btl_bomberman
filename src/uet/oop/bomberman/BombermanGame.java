@@ -9,6 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -54,6 +56,7 @@ public static Group root = new Group();
         // Tao Canvas
 
 
+
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-5*Sprite.SCALED_SIZE, Sprite.SCALED_SIZE * (HEIGHT+1));
         gc = canvas.getGraphicsContext2D();
 
@@ -92,7 +95,12 @@ setPoint(root,_time,_point,_lives);
 
             }
         };
-
+//        String path = "D:\\BT_Code\\Java_intellij\\bomberman2\\res\\textures\\nhacnen2.wav";
+//
+//
+//        Media media = new Media(new File(path).toURI().toString());
+//        MediaPlayer mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.setAutoPlay(true);
         Menu menu = new Menu(stage,root,timer);
 
 
@@ -104,27 +112,12 @@ setPoint(root,_time,_point,_lives);
         creatEntinys();
 creatItem();
 
+
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             @Override
             public void handle(KeyEvent keyEvent) {
 
-                if (keyEvent.getCode() == KeyCode.SPACE) {
-
-                    boolean check_bomb = false;
-                    for (Entity entity : entities) {
-                        if (entity instanceof Bomb) {
-                            check_bomb = true;
-                        }
-                    }
-                    if (!check_bomb) {
-                        Bomb bomb = new Bomb((entities.get(0).getX() + 16) / Sprite.SCALED_SIZE,
-                                (entities.get(0).getY() + 16) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
-                        entities.add(bomb);
-
-
-                    }
-                }
                 ((Bomber) entities.get(0)).setKeycode(keyEvent.getCode());
                 ((Bomber) entities.get(0)).keypress();
             }

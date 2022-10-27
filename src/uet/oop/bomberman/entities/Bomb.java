@@ -45,20 +45,21 @@ public class Bomb extends Entity {
             img = Sprite.bomb_2.getFxImage();
         }
 
-        if (timeloop == 150) {
+        if (timeloop == 120) {
            destroy();
             img = Sprite.bomb_exploded.getFxImage();
         }
-        if (timeloop == 155) {
+        if (timeloop == 125) {
             img = Sprite.bomb_exploded1.getFxImage();
         }
-        if (timeloop == 160) {
+        if (timeloop == 130) {
             img = Sprite.bomb_exploded2.getFxImage();
 
         }
 
-        if (timeloop == 170) {
+        if (timeloop == 140) {
             BombermanGame.entities.remove(this);
+            Bomber.bombList.remove(this);
             canmove[x/Sprite.SCALED_SIZE][y/Sprite.SCALED_SIZE] = false;
             timeloop = 0;
         }
