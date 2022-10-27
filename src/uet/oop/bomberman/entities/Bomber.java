@@ -128,12 +128,7 @@ public class Bomber extends Entity {
                 if(bomerX==(entities.get(i).x+24)/Sprite.SCALED_SIZE && bomerY==(entities.get(i).y+24)/Sprite.SCALED_SIZE) {
                     setLives(false);
                 }
-//                if (((entities.get(i).x / Sprite.SCALED_SIZE) == x / Sprite.SCALED_SIZE
-//                        && (entities.get(i).y / Sprite.SCALED_SIZE) == y / Sprite.SCALED_SIZE)
-//                        || ((entities.get(i).x + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE) == x / Sprite.SCALED_SIZE &&
-//                        ((entities.get(i).y + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE) == y / Sprite.SCALED_SIZE) {
-//                    setLives(false);
-//                }
+
             }
         }
 
@@ -201,13 +196,7 @@ public void animation_bomber() {
             itemFlame=false;
             Bomb.lever=2;
 
-//            for (int i = 0; i < entities.size(); i++) {
-//                if(entities.get(i).img.equals(Sprite.leverBomb.getFxImage())) {
-//                    entities.get(i).setLives(false);
                    entities.remove(entities.get(entities.size()-1));
-//                    return;
-//                }
-//            }
 
         }
     }
@@ -229,7 +218,7 @@ public void animation_bomber() {
                 check_nhay = false;
             }
         }
-//     //  else check_nhay=true;
+
 
     public void animation_die() {
         timeDie++;
