@@ -95,6 +95,7 @@ setPoint(root,_time,_point,_lives);
 
             }
         };
+
 //        String path = "D:\\BT_Code\\Java_intellij\\bomberman2\\res\\textures\\nhacnen2.wav";
 //
 //
