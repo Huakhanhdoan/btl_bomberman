@@ -7,7 +7,6 @@ import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -20,11 +19,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Item.Item;
+import uet.oop.bomberman.entities.Item.LeverBomb;
+import uet.oop.bomberman.entities.Item.Step;
 import uet.oop.bomberman.entities.enemy.Enemy;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.menu.Menu;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -88,9 +89,12 @@ setPoint(root,_time,_point,_lives);
                 render();
                 update();
 
-                if (check_endgame()) {
+                if (check_endgame()|| check_wingame()) {
 
-                    reset_game();
+
+                        Menu.newgame(stage,this);
+                        reset_game();
+
                 }
 
             }
@@ -101,17 +105,18 @@ setPoint(root,_time,_point,_lives);
 //
 //        Media media = new Media(new File(path).toURI().toString());
 //        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//        mediaPlayer.setAutoPlay(true);
+//     mediaPlayer.play();
+
+        Menu.pausegame(timer);
         Menu menu = new Menu(stage,root,timer);
 
 
-
-        createMap();
         Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
-        bomberman.setSpeed(2);
-        creatEntinys();
-creatItem();
+        reset_game();
+
+
+
 
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -179,10 +184,9 @@ creatItem();
         entities.add(oneal2);
     }
     public void creatItem() {
-        Item start = new Item(3,7,Sprite.item_nhay.getFxImage());
-        Item end = new Item(21,7,Sprite.item_nhay.getFxImage());
-        stillObjects.add(start);
-        stillObjects.add(end);
+        Step start = new Step(3,7);
+        Step end = new Step(21,7);
+
     }
 
     public void update() {
@@ -201,8 +205,12 @@ creatItem();
     }
 
     public boolean check_endgame() {
-        if (!(entities.get(0) instanceof Bomber) || time <=0) return true;
-        return false;
+        if(!entities.isEmpty()) {
+            if (!(entities.get(0) instanceof Bomber) || time <= 0) return true;
+            return false;
+        }
+        return true;
+
     }
     public boolean check_wingame() {
         if(entities.size()==1 &&entities.get(0) instanceof Bomber ) {
@@ -212,14 +220,12 @@ creatItem();
     }
 
     public void reset_game() {
-        count++;
-        Image image = new Image("/textures/gameover.jpg");
-        gc.drawImage(image, 0, 0, 25 * Sprite.SCALED_SIZE, 14 * Sprite.SCALED_SIZE);
-        if (count == 70) {
+
 
             entities.clear();
             stillObjects.clear();
             Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+            bomberman.leverBomb=1;
             entities.add(bomberman);
             bomberman.setSpeed(2);
 
@@ -231,16 +237,25 @@ creatItem();
                 throw new RuntimeException(e);
             }
             creatItem();
+            time = 200*60;
+            point = 0;
 
-        }
+
 
     }
+
+
+
+
+
+
+
+
     public void setPoint( Group root,Text timer,Text point, Text lives) {
         Rectangle rectangle = new Rectangle(0,0,20*Sprite.SCALED_SIZE,Sprite.SCALED_SIZE);
         rectangle.setFill(Color.LIGHTGREEN);
         timer.setX(200);
         timer.setY(30);
-
         point.setX(Sprite.SCALED_SIZE);
         point.setY(30);
 
@@ -250,6 +265,7 @@ creatItem();
         point.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         timer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         root.getChildren().addAll(rectangle,point,timer,lives);
+
 
     }
     public void updateSetpoint(Text _point, Text timer, Text live) {

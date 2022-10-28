@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Item.LeverBomb;
+import uet.oop.bomberman.entities.Item.Speed;
 import uet.oop.bomberman.entities.enemy.Enemy;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
@@ -22,6 +24,8 @@ public class Bomber extends Entity {
     private boolean check_nhay = true;
    // private int time_item =0;
     private boolean itemFlame = true;
+    private boolean itemStep = true;
+    private boolean Portal = true;
     public int leverBomb =1;
     private boolean keyleft = false;
     private boolean keyright = false;
@@ -179,7 +183,7 @@ public void animation_bomber() {
 
         if (lives) {
             item_nhay();
-            itemLeverBomb();
+            eat_item();
             check_colide_enemy();
             moving();
             animation_bomber();
@@ -191,15 +195,7 @@ public void animation_bomber() {
         }
 
     }
-    public void itemLeverBomb() {
-        if((x+24)/Sprite.SCALED_SIZE==4&&(y+24)/Sprite.SCALED_SIZE==5&&itemFlame) {
-            itemFlame=false;
-            Bomb.lever=2;
 
-                   entities.remove(entities.get(entities.size()-1));
-
-        }
-    }
     public void item_nhay() {
         if(!(((x+24)/Sprite.SCALED_SIZE== 3 || (x+24)/Sprite.SCALED_SIZE==21)&&(y+24)/Sprite.SCALED_SIZE ==7)) {
             check_nhay=true;
@@ -217,6 +213,31 @@ public void animation_bomber() {
                 y=7*Sprite.SCALED_SIZE;
                 check_nhay = false;
             }
+        }
+        public void eat_item() {
+        int bomX = (x+24)/Sprite.SCALED_SIZE;
+        int bomY = (y+24)/Sprite.SCALED_SIZE;
+        if(bomX==15 && bomY ==3 && itemStep) {
+            speed =3;
+            itemStep = false;
+            for(int i=entities.size()-1;i>=0;i--) {
+                if(entities.get(i) instanceof Speed) {
+                    entities.remove(i);
+                    return;
+                }
+            }
+        }
+            if(bomX==4 && bomY ==5 && itemFlame) {
+                itemFlame=false;
+                Bomb.lever=2;
+                for(int i=entities.size()-1;i>=0;i--) {
+                    if(entities.get(i) instanceof LeverBomb) {
+                        entities.remove(i);
+                        return;
+                    }
+                }
+            }
+
         }
 
 

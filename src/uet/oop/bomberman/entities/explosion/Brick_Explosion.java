@@ -2,7 +2,9 @@ package uet.oop.bomberman.entities.explosion;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Item.Item;
+import uet.oop.bomberman.entities.Item.LeverBomb;
+import uet.oop.bomberman.entities.Item.Portal;
+import uet.oop.bomberman.entities.Item.Speed;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Brick_Explosion extends Explosion{
@@ -24,17 +26,26 @@ public class Brick_Explosion extends Explosion{
         if(timeDie == 20) {
             BombermanGame.entities.remove(this);
             timeDie=0;
-            if(x/Sprite.SCALED_SIZE==4&&y/Sprite.SCALED_SIZE==5) {
-                Item lever = new Item(4,5,Sprite.leverBomb.getFxImage());
-                BombermanGame.entities.add(lever);
-            }
-            if(x/Sprite.SCALED_SIZE==13&&y/Sprite.SCALED_SIZE==6) {
-                Item door = new Item(13, 6, Sprite.portal.getFxImage());
-                BombermanGame.entities.add(door);
-                BombermanGame.canmove[13][6] = true;
-            }
+            creat_item();
+
         }
         timeDie++;
+
+    }
+    public void creat_item() {
+        if(x/Sprite.SCALED_SIZE==4&&y/Sprite.SCALED_SIZE==5) {
+            LeverBomb lever = new LeverBomb(4,5);
+            BombermanGame.entities.add(lever);
+        }
+        if(x/Sprite.SCALED_SIZE==13&&y/Sprite.SCALED_SIZE==6) {
+            Portal door = new Portal(13, 6);
+            BombermanGame.canmove[13][6] = true;
+        }
+        if(x/Sprite.SCALED_SIZE==15&&y/Sprite.SCALED_SIZE==3) {
+            Speed speed1 = new Speed(15, 3);
+
+        }
+
 
     }
 }
