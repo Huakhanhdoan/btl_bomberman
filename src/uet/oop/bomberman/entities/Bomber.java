@@ -272,7 +272,7 @@ public void animation_bomber() {
         }
     }
     public void creat_bomb() {
-        if(bombList.isEmpty()) {
+        if(bombList.isEmpty()&& lives) {
             Bomb bomb = new Bomb((x+24)/Sprite.SCALED_SIZE,(y+24)/Sprite.SCALED_SIZE,Sprite.bomb.getFxImage());
             entities.add(bomb);
             bombList.add(bomb);

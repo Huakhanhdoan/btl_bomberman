@@ -71,6 +71,7 @@ public class BombermanGame extends Application {
         Text _point = new Text();
         Text _time = new Text();
         Text _lives = new Text();
+        Text gameover = new Text(350, 300,"");
         setPoint(root, _time, _point, _lives);
         root.getChildren().add(canvas);
 
@@ -96,18 +97,20 @@ public class BombermanGame extends Application {
 
                 if (check_endgame() || check_wingame()) {
                     count++;
-                    String s = "";
                     if (check_endgame()) {
-                        s = "Game Over!";
+                        gameover.setText("Game Over!");
                     } else {
-                        s = "You Win!";
+                        gameover.setText("You Win!");
                     }
-                    Text gameover = new Text(350, 300, s);
-                    gameover.setStyle("-fx-font: 50 Impact;");
-                    root.getChildren().add(gameover);
+
+                        gameover.setStyle("-fx-font: 50 Impact;");
+                      if(count==2) root.getChildren().add(gameover);
                     if (count > 100) {
+
                         Menu.newgame(stage, this);
+                        root.getChildren().remove(gameover);
                         reset_game();
+
                         count = 0;
                     }
                 }
