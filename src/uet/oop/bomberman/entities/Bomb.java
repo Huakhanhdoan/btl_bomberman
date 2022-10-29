@@ -71,11 +71,11 @@ public class Bomb extends Entity {
         int bombY = (y) / Sprite.SCALED_SIZE;
         check_entiny(bombX,bombY);
         if (!canmove[bombX + 1][bombY]) {
-            Explosion explosion = new Horiontal(bombX+1,bombY,Sprite.explosion_horizontal.getFxImage());
+            Explosion explosion = new Horiontal(bombX+1,bombY);
             entities.add(explosion);
             if(lever==2) {
                 if (!canmove[bombX + 2][bombY]) {
-                    Explosion explosion2 = new Horiontal(bombX + 2, bombY, Sprite.explosion_horizontal.getFxImage());
+                    Explosion explosion2 = new Horiontal(bombX + 2, bombY);
                     entities.add(explosion2);
                 }
                 else {
@@ -89,11 +89,11 @@ public class Bomb extends Entity {
         }
 
         if (!canmove[bombX - 1][bombY]) {
-            Explosion explosion = new Horiontal(x/Sprite.SCALED_SIZE-1,y/Sprite.SCALED_SIZE,Sprite.explosion_horizontal.getFxImage());
+            Explosion explosion = new Horiontal(x/Sprite.SCALED_SIZE-1,y/Sprite.SCALED_SIZE);
             entities.add(explosion);
             if(lever==2) {
                 if (!canmove[bombX - 2][bombY]) {
-                    Explosion explosion2 = new Horiontal(bombX - 2, bombY, Sprite.explosion_horizontal.getFxImage());
+                    Explosion explosion2 = new Horiontal(bombX - 2, bombY);
                     entities.add(explosion2);
                 }
                 else {
@@ -108,11 +108,11 @@ public class Bomb extends Entity {
 
         }
         if (!canmove[bombX][bombY - 1]) {
-            Explosion explosion = new Vertical(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE-1,Sprite.explosion_vertical.getFxImage());
+            Explosion explosion = new Vertical(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE-1);
             entities.add(explosion);
             if(lever==2) {
                 if (!canmove[bombX ][bombY-2]) {
-                    Explosion explosion2 = new Vertical(bombX , bombY-2, Sprite.explosion_vertical.getFxImage());
+                    Explosion explosion2 = new Vertical(bombX , bombY-2);
                     entities.add(explosion2);
                 }
                 else {
@@ -124,11 +124,11 @@ public class Bomb extends Entity {
 
         }
         if (!canmove[bombX][bombY + 1]) {
-            Explosion explosion = new Vertical(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE+1,Sprite.explosion_vertical.getFxImage());
+            Explosion explosion = new Vertical(x/Sprite.SCALED_SIZE,y/Sprite.SCALED_SIZE+1);
             entities.add(explosion);
             if(lever==2) {
                 if (!canmove[bombX ][bombY+2]) {
-                    Explosion explosion2 = new Vertical(bombX , bombY+2, Sprite.explosion_vertical.getFxImage());
+                    Explosion explosion2 = new Vertical(bombX , bombY+2);
                     entities.add(explosion2);
                 }
                 else {

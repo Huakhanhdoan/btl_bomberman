@@ -281,8 +281,8 @@ public class BombermanGame extends Application {
         start.setScaleX(5);
         start.setScaleY(2);
         start.setTextFill(Color.SNOW);
-        start.setStyle("-fx-background-color: " + Color.BURLYWOOD.toString().replace("0x", "#"));
-        start.setFont(Font.font("Impact", FontWeight.BOLD, 15));
+        start.setStyle("-fx-background-color: " + Color.YELLOWGREEN.toString().replace("0x", "#"));
+        start.setFont(Font.font("Impact", FontWeight.BOLD, 12));
 
         animationButon(start);
         start.setOnAction(event -> {
@@ -298,8 +298,8 @@ public class BombermanGame extends Application {
         _continue.setScaleX(5);
         _continue.setScaleY(2);
         _continue.setTextFill(Color.SNOW);
-        _continue.setStyle("-fx-background-color: " + Color.BURLYWOOD.toString().replace("0x", "#"));
-        _continue.setFont(Font.font("Impact", FontWeight.BOLD, 15));
+        _continue.setStyle("-fx-background-color: " + Color.YELLOWGREEN.toString().replace("0x", "#"));
+        _continue.setFont(Font.font("Impact", FontWeight.BOLD, 12));
         animationButon(_continue);
         _continue.setOnAction(event -> {
             root.getChildren().removeAll(start, exit, _continue);
@@ -311,8 +311,8 @@ public class BombermanGame extends Application {
         exit.setScaleX(5);
         exit.setScaleY(2);
         exit.setTextFill(Color.SNOW);
-        exit.setStyle("-fx-background-color: " + Color.BURLYWOOD.toString().replace("0x", "#"));
-        exit.setFont(Font.font("Impact", FontWeight.BOLD, 15));
+        exit.setStyle("-fx-background-color: " + Color.YELLOWGREEN.toString().replace("0x", "#"));
+        exit.setFont(Font.font("Impact", FontWeight.BOLD, 12));
         animationButon(exit);
         exit.setOnAction(event -> {
             root.getChildren().removeAll(start, exit, _continue);

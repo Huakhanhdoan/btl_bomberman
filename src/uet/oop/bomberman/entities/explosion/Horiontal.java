@@ -5,8 +5,8 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Horiontal extends Explosion{
-    public Horiontal(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Horiontal(int xUnit, int yUnit) {
+        super(xUnit, yUnit, Sprite.explosion_horizontal.getFxImage());
     }
 
     @Override

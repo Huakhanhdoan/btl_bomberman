@@ -5,8 +5,8 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Vertical extends Explosion{
-    public Vertical(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Vertical(int xUnit, int yUnit) {
+        super(xUnit, yUnit, Sprite.explosion_vertical.getFxImage());
     }
     @Override
     public void update() {
