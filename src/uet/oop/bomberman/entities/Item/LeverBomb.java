@@ -13,7 +13,7 @@ public class LeverBomb extends Entity {
 
     @Override
     public void update() {
-        if(!isLives()) {
+        if (!isLives()) {
             BombermanGame.entities.remove(this);
         }
 

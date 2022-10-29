@@ -39,7 +39,6 @@ public class Brick_Explosion extends Explosion{
         }
         if(x/Sprite.SCALED_SIZE==13&&y/Sprite.SCALED_SIZE==6) {
             Portal door = new Portal(13, 6);
-            BombermanGame.canmove[13][6] = true;
         }
         if(x/Sprite.SCALED_SIZE==15&&y/Sprite.SCALED_SIZE==3) {
             Speed speed1 = new Speed(15, 3);

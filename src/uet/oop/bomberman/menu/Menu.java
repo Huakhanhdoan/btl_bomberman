@@ -10,14 +10,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Border;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -39,7 +39,7 @@ public class Menu extends javafx.scene.control.Menu {
         start.setScaleX(5);
         start.setScaleY(2);
         start.setTextFill(Color.WHITE);
-        start.setBackground(new Background(newGameBgr));
+        start.setBackground(Background.EMPTY);
 
         start.onMouseMovedProperty().set(new EventHandler<MouseEvent>() {
             @Override
@@ -75,7 +75,7 @@ public class Menu extends javafx.scene.control.Menu {
                 exit.setTextFill(Color.WHITE);
             }
         });
-        exit.setBackground(new Background(newGameBgr));
+        exit.setBackground(Background.EMPTY);
         exit.setFont(Font.font("Impact", FontWeight.BOLD, 15));
         exit.setOnAction(event -> {
 
@@ -158,45 +158,6 @@ public class Menu extends javafx.scene.control.Menu {
 
         });
     }
-    public static void pausegame(AnimationTimer timer) {
-        ImageView pause_img = new ImageView(new Image("/textures/pause.png/"));
-        Button pause = new Button("",pause_img);
-        pause.setLayoutX(900);
-        pause.setLayoutY(2);
-        pause.setBackground(Background.EMPTY);
 
-        ImageView continue_img = new ImageView(new Image("/textures/continue.png/"));
-        Button _continue = new Button("",continue_img);
-        _continue.setLayoutX(900);
-        _continue.setLayoutY(2);
-        _continue.setBackground(Background.EMPTY);
-
-
-pause.setFocusTraversable(false);
-_continue.setFocusTraversable(false);
-pause.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-    @Override
-    public void handle(MouseEvent t) {
-        timer.stop();
-        root.getChildren().remove(pause);
-        root.getChildren().add(_continue);
-    }
-});
-
-        _continue.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent t) {
-                timer.start();
-                root.getChildren().remove(_continue);
-                root.getChildren().add(pause);
-            }
-
-        });
-
-        root.getChildren().add(pause);
-
-    }
     }
 

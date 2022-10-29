@@ -3,6 +3,8 @@ package uet.oop.bomberman.entities.enemy;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import static uet.oop.bomberman.BombermanGame.*;
+
+import uet.oop.bomberman.entities.Bomb;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -110,42 +112,4 @@ public class Doll extends Entity {
         }
     }
 
-    private boolean AI() {
-        randomd();
-        double kc = distance(x, y);
-        if (canMove_enemy(x + speed, y)&&x % Sprite.SCALED_SIZE == speed &&y % Sprite.SCALED_SIZE == 0) {
-            if (kc > distance(x + speed, y)) {
-                direction = 1;
-                return true;
-            }
-        }
-        if (canMove_enemy(x - speed, y)&&(x-speed) % Sprite.SCALED_SIZE == 0 &&y % Sprite.SCALED_SIZE == 0) {
-            if (kc > distance(x - speed, y)) {
-                direction = 2;
-                return true;
-            }
-
-        }
-        if (canMove_enemy(x, y + speed)&&x % Sprite.SCALED_SIZE == 0 &&y % Sprite.SCALED_SIZE == 0) {
-            if (kc > distance(x, y + speed)) {
-                direction = 3;
-                return true;
-            }
-
-        }
-        if (canMove_enemy(x, y - speed)&&x % Sprite.SCALED_SIZE == 0 &&(y-speed) % Sprite.SCALED_SIZE == 0) {
-            if (kc > distance(x, y - speed)) {
-                direction = 4;
-                return true;
-            }
-        }
-        return false;
-
-    }
-
-    private double distance(int x, int y) {
-
-        double kc = Math.abs(x - BombermanGame.entities.get(0).getX()) + Math.abs(y - BombermanGame.entities.get(0).getY());
-        return kc;
-    }
 }

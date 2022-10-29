@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Item.LeverBomb;
+import uet.oop.bomberman.entities.Item.Portal;
 import uet.oop.bomberman.entities.Item.Speed;
+import uet.oop.bomberman.entities.enemy.Doll;
 import uet.oop.bomberman.entities.enemy.Enemy;
 import uet.oop.bomberman.entities.enemy.Oneal;
 import uet.oop.bomberman.graphics.Sprite;
@@ -18,14 +20,13 @@ import static uet.oop.bomberman.BombermanGame.*;
 
 
 public class Bomber extends Entity {
-    public int wordX;
-    public int wordY;
+
     private KeyCode keycode;
     private boolean check_nhay = true;
    // private int time_item =0;
     private boolean itemFlame = true;
     private boolean itemStep = true;
-    private boolean Portal = true;
+    private boolean portal = true;
     public int leverBomb =1;
     private boolean keyleft = false;
     private boolean keyright = false;
@@ -40,6 +41,9 @@ public class Bomber extends Entity {
         super(x, y, img);
     }
 
+    public boolean isPortal() {
+        return portal;
+    }
 
     public void setKeycode(KeyCode keycode) {
         this.keycode = keycode;
@@ -128,7 +132,7 @@ public class Bomber extends Entity {
        int bomerY = (y+24)/Sprite.SCALED_SIZE;
         int size = entities.size();
         for (int i = 1; i < size; i++) {
-            if (entities.get(i) instanceof Enemy||entities.get(i) instanceof Oneal) {
+            if (entities.get(i) instanceof Enemy||entities.get(i) instanceof Oneal|| entities.get(i) instanceof Doll) {
                 if(bomerX==(entities.get(i).x+24)/Sprite.SCALED_SIZE && bomerY==(entities.get(i).y+24)/Sprite.SCALED_SIZE) {
                     setLives(false);
                 }
@@ -184,6 +188,7 @@ public void animation_bomber() {
         if (lives) {
             item_nhay();
             eat_item();
+            check_Portal();
             check_colide_enemy();
             moving();
             animation_bomber();
@@ -291,6 +296,19 @@ public void easy_move() {
         }
     }
 
+}
+public void check_Portal () {
+
+        if((x+24)/Sprite.SCALED_SIZE==13 && (y+24)/Sprite.SCALED_SIZE==6 &&portal && entities.size()==1 ) {
+            portal = false;
+            for (int i = stillObjects.size()-1; i <=0 ; i++) {
+                if(stillObjects.get(i) instanceof Portal) {
+                    stillObjects.remove(i);
+                    portal = false;
+                    return;
+                }
+            }
+        }
 }
 
 }
